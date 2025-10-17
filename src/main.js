@@ -5,6 +5,7 @@ import router from './router'
 
 import './styles/main.css'
 import './styles/components.css'
+import './styles/mobile.css'
 
 const app = createApp(App);
 app.use(router);
