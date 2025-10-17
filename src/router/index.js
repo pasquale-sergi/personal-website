@@ -1,16 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory} from 'vue-router'
+import { defineAsyncComponent } from 'vue'
 import App from '../App.vue'
 import ProjectDetail from '../pages/ProjectDetail.vue'
 import { projects } from '../data/projects.js'  // ← Import once
-import HomePage from '../pages/HomePage.vue'
-import MobileHomePage from '../pages/MobileHomePage.vue'
+import HomePageWrapper from '../components/HomePageWrapper.vue'
+
 
 const isMobile = () => window.innerWidth < 768
 
 const routes = [
   {
     path: '/',
-    component: () => isMobile() ? MobileHomePage : HomePage,
+    component: HomePageWrapper,
   },
   {
     path: '/project/:id',
