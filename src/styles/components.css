@@ -596,7 +596,7 @@ header.container-zen {
   @apply mx-4 md:mx-8;
 }
 
-.app-container {
+.desktop-container {
   @apply mx-4 md:mx-8 my-4;
   @apply rounded-3xl;
   @apply shadow-2xl;

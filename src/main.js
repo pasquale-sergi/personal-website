@@ -5,7 +5,7 @@ import router from './router'
 
 import './styles/main.css'
 import './styles/components.css'
-
+// Prevent horizontal scroll
 
 const app = createApp(App);
 app.use(router);

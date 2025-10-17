@@ -52,23 +52,55 @@
       </div>
     </section>
 
-    <!-- Skills section -->
+<!-- Skills section -->
     <section class="mobile-section">
       <h2>Skills</h2>
       
       <h3 class="mobile-subsection-title">Software</h3>
-      <div class="mobile-skills-grid">
-        <div v-for="skill in softwareSkills" :key="skill.name" class="mobile-skill">
-          <img :src="skill.logo" :alt="skill.name" />
-          <span>{{ skill.name }}</span>
+      <div class="mobile-carousel-wrapper">
+        <div class="mobile-carousel">
+          <!-- First set -->
+          <div 
+            v-for="skill in softwareSkills" 
+            :key="`software-1-${skill.name}`"
+            class="mobile-carousel-item"
+          >
+            <img :src="skill.logo" :alt="skill.name" />
+            <span>{{ skill.name }}</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div 
+            v-for="skill in softwareSkills" 
+            :key="`software-2-${skill.name}`"
+            class="mobile-carousel-item"
+          >
+            <img :src="skill.logo" :alt="skill.name" />
+            <span>{{ skill.name }}</span>
+          </div>
         </div>
       </div>
 
       <h3 class="mobile-subsection-title">Hardware & Embedded</h3>
-      <div class="mobile-skills-grid">
-        <div v-for="skill in hardwareSkills" :key="skill.name" class="mobile-skill">
-          <img :src="skill.logo" :alt="skill.name" />
-          <span>{{ skill.name }}</span>
+      <div class="mobile-carousel-wrapper">
+        <div class="mobile-carousel mobile-carousel-reverse">
+          <!-- First set -->
+          <div 
+            v-for="skill in hardwareSkills" 
+            :key="`hardware-1-${skill.name}`"
+            class="mobile-carousel-item"
+          >
+            <img :src="skill.logo" :alt="skill.name" />
+            <span>{{ skill.name }}</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div 
+            v-for="skill in hardwareSkills" 
+            :key="`hardware-2-${skill.name}`"
+            class="mobile-carousel-item"
+          >
+            <img :src="skill.logo" :alt="skill.name" />
+            <span>{{ skill.name }}</span>
+          </div>
         </div>
       </div>
     </section>
@@ -209,18 +241,23 @@ const filteredProjects = computed(() => {
 </script>
 
 <style scoped>
+/* Global mobile styles */
 .mobile-home {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   background: linear-gradient(to br, #f5f1e8 to #ede5d9);
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .mobile-header {
-  padding: 1.5rem 0;
+  padding: 1.5rem 1rem;
   text-align: center;
   background: white;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-header h1 {
@@ -246,6 +283,7 @@ const filteredProjects = computed(() => {
   height: 180px;
   overflow: hidden;
   margin: 0;
+  box-sizing: border-box;
 }
 
 .mobile-hero img {
@@ -258,6 +296,10 @@ const filteredProjects = computed(() => {
   padding: 1.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   margin: 0;
+  width: 100%;
+  max-width: 100vw; /* Add this */
+  box-sizing: border-box;
+  overflow-x: hidden; /* Add this */
 }
 
 .mobile-section h2 {
@@ -291,6 +333,10 @@ const filteredProjects = computed(() => {
   color: #666;
   text-align: center;
   margin: 0 0 1rem 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-link-btn {
@@ -303,6 +349,7 @@ const filteredProjects = computed(() => {
   font-family: serif;
   cursor: pointer;
   font-size: 1rem;
+  padding: 0;
 }
 
 .mobile-link-btn:active {
@@ -351,6 +398,7 @@ const filteredProjects = computed(() => {
 .mobile-progress-fill {
   height: 100%;
   background: linear-gradient(to right, #6b9e66, #d97706);
+  transition: width 0.5s ease;
 }
 
 .mobile-progress span {
@@ -360,12 +408,101 @@ const filteredProjects = computed(() => {
   min-width: 35px;
 }
 
-/* Skills */
+/* Carousel */
+.mobile-carousel-wrapper {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: rgba(245, 241, 232, 0.5);
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.mobile-carousel {
+  display: flex;
+  gap: 1rem;
+  width: fit-content;
+  animation: mobileScrollLeft 30s linear infinite;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.mobile-carousel-reverse {
+  animation: mobileScrollRight 30s linear infinite;
+}
+
+.mobile-carousel:hover,
+.mobile-carousel-reverse:hover {
+  animation-play-state: paused;
+}
+
+.mobile-carousel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  width: 5.5rem;
+  padding: 0.75rem 0.5rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: all 0.3s;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mobile-carousel-item:active {
+  background: #f9f9f9;
+  transform: scale(0.95);
+}
+
+.mobile-carousel-item img {
+  width: 1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+  filter: brightness(0.8);
+}
+
+.mobile-carousel-item span {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: #666;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+@keyframes mobileScrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes mobileScrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Skills Grid */
 .mobile-skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-skill {
@@ -389,6 +526,7 @@ const filteredProjects = computed(() => {
 .mobile-skill img {
   width: 2rem;
   height: 2rem;
+  object-fit: contain;
   filter: brightness(0.8);
 }
 
@@ -405,17 +543,18 @@ const filteredProjects = computed(() => {
   gap: 0.5rem;
   margin-bottom: 1rem;
   justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-tag {
   padding: 0.5rem 1rem;
   background: #f0f0f0;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 20px;
   font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
-  border: none;
 }
 
 .mobile-tag:active {
@@ -432,6 +571,9 @@ const filteredProjects = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-project-card {
@@ -516,6 +658,9 @@ const filteredProjects = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .mobile-btn {
@@ -531,6 +676,8 @@ const filteredProjects = computed(() => {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  border: none;
+  cursor: pointer;
 }
 
 .mobile-btn img {
