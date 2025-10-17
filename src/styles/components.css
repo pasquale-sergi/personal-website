@@ -177,7 +177,7 @@
 }
 
 .section__title {
-  @apply text-3xl md:text-4xl font-serif mb-8;
+  @apply text-2xl md:text-3xl font-serif mb-8;
   @apply text-zen-900 dark:text-zen-50;
 }
 
@@ -550,19 +550,15 @@ html {
 }
 
 /* Sticky Header - Add transition for background and shadow */
-header.container-zen {
-  @apply motion-safe:transition-all motion-safe:duration-300 ease-in-out;
-  /* Add initial background if you want a base */
-  background-color: transparent;
-  backdrop-filter: blur(0px); /* Initial state */
-  box-shadow: none; /* Initial state */
+header.container-zen.scrolled-header {
+  background-color: rgba(245, 241, 232, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Class to apply on scroll */
-.scrolled-header {
-  @apply bg-zen-50/80 dark:bg-zen-900/80;
-  backdrop-filter: blur(8px);
-  @apply shadow-lg;
+.dark header.container-zen.scrolled-header {
+  background-color: rgba(44, 36, 24, 0.8) !important;
 }
 /* links for contact section style*/
 .contact-link {
@@ -602,3 +598,4 @@ header.container-zen {
   @apply bg-gradient-to-br from-zen-50 to-zen-100;
   @apply dark:from-zen-900 dark:to-zen-800;
 }
+

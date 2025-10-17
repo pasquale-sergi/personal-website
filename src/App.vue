@@ -47,7 +47,7 @@ onUnmounted(() => {
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: auto; /* Allows full scroll (x hidden comes from globals) */
+
   position: relative; /* Only for particles */
   background: transparent; /* No bg to inherit */
   box-sizing: border-box;
@@ -61,7 +61,7 @@ onUnmounted(() => {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    overflow: auto;
+
   }
 
   .particle-container {

@@ -1,8 +1,8 @@
 <template>
     
-  <div class="min-h-screen bg-gradient-to-br from-zen-50 to-zen-100 
+ <div class="min-h-screen bg-gradient-to-br from-zen-50 to-zen-100
               dark:from-zen-900 dark:to-zen-800">
-    <div class="relative hero-animated-bg">
+    <div ref="heroRef" class="relative hero-animated-bg">
 <div class="relative h-64 md:h-80 lg:h-76 overflow-hidden ">
   <img
     src="/img4.jpg"
@@ -17,9 +17,12 @@
 
 
     <!-- Header -->
-    <header  :class="{ 'scrolled-header': isScrolled }" class="container-zen py-8 md:py-12 sticky top-0 z-30 
-                   bg-gradient-to-b from-zen-50 to-transparent 
-                   dark:from-zen-900 dark:to-transparent">
+<header 
+  :class="{ 'scrolled-header': isScrolled }" 
+  class="container-zen py-8 md:py-12 sticky top-0 z-30 
+         bg-gradient-to-b from-zen-50 to-transparent 
+         dark:from-zen-900 dark:to-transparent"
+>
       <nav class="flex justify-between items-center">
         <div>
           <h1 class="text-2xl md:text-3xl font-serif">Pasquale</h1>
@@ -278,6 +281,8 @@ const commandPaletteRef = ref(null)
 const selectedTag = ref(null)
 const showExploring = ref(false)
 const isScrolled=ref(false)
+const heroRef = ref(null)
+const scrollTriggerPoint = ref(0)
 
 const softwareSkills = [
   { name: 'Vue.js', logo: 'https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vuedotjs.svg' },
@@ -384,17 +389,52 @@ const formatDate = (date) => {
 }
 
 const handleScroll = () => {
-  const newScrolled = window.scrollY > 50;
-  isScrolled.value = newScrolled;
-  console.log('ScrollY:', window.scrollY, 'isScrolled set to:', newScrolled); // Temp debug
+    if (scrollTriggerPoint.value > 0) {
+      isScrolled.value = window.scrollY > scrollTriggerPoint.value
+    }
+  }
+
+const calculateTriggerPoint = () => {
+  if (heroRef.value) {
+    // The header sticks when we've scrolled past the hero section.
+    // We subtract a small amount (e.g., 20px) for a smoother visual transition
+    // so the change completes just as it settles at the top.
+    scrollTriggerPoint.value = heroRef.value.offsetHeight - 20
+  }
 }
 
 onMounted(() => {
+    // Calculate the initial value
+  calculateTriggerPoint()
+  
+  // Add listeners
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', calculateTriggerPoint)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', calculateTriggerPoint)
 })
 </script>
+
+<style scoped>
+.scrolled-header {
+  /* 1. Make it smaller: Reduce vertical padding */
+  @apply py-4;
+
+  /* 2. Make it less "boxy": Use a gradient that fades to transparent */
+  @apply bg-gradient-to-b from-zen-50/75 to-transparent;
+  @apply dark:from-zen-900/75 dark:to-transparent;
+
+  /* 3. Make it softer: Remove the hard shadow and bottom border */
+  @apply shadow-none border-transparent;
+
+  /* 4. Ensure a smooth transition for all property changes */
+  @apply transition-all duration-300 ease-in-out;
+
+  /* The backdrop blur remains the key to the effect */
+  @apply backdrop-blur-md;
+}
+</style>
 

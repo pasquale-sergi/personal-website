@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="space-y-4 mb-12">
-      <h3 class="text-center font-serif font-bold text-zen-900 dark:text-zen-50 text-xl">
+      <h3 class="section__title">
         Skills
       </h3>
       <p class="text-center text-sm text-zen-600 dark:text-zen-400">
