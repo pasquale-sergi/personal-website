@@ -102,7 +102,7 @@
         <h2 class="section__title">Projects</h2>
         <div class="max-w-2xl mx-auto text-center mb-8">
     <p class="text-base md:text-lg text-zen-700 dark:text-zen-300 leading-relaxed">
-      A collection of my wor, from full-stack applications to embedded systems. 
+      A collection of my work, from full-stack applications to embedded systems. 
       Each project represents an attempt to solve real-world problems through thoughtful design 
       and clean implementation.
     </p>
@@ -194,7 +194,7 @@
     <div class="flex flex-col md:flex-row gap-4 justify-center mb-8">
       <!-- Email -->
       <a 
-        href="pasquale.s3rgi@gmail.com" 
+        href="mailto:pasquale.s3rgi@gmail.com" 
         class="contact-link"
         title="Email"
       >
@@ -245,6 +245,8 @@
     </main>
     <ZenQuoteWidget />
 
+    <AboutMe />
+
         <ExploringPanel 
       :isOpen="showExploring"
       @toggle="showExploring = !showExploring"
@@ -270,6 +272,7 @@ import CommandPalette from '../components/CommandPalette.vue'
 import ExploringPanel from '../components/ExploringPanel.vue'
 import TechCarousel from '../components/TechCarousel.vue'
 import ZenQuoteWidget from '../components/ZenQuoteWidget.vue'
+import AboutMe from '../components/AboutMe.vue'
 
 const commandPaletteRef = ref(null)
 const selectedTag = ref(null)

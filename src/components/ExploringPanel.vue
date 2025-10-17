@@ -1,13 +1,14 @@
 <template>
   <div class="exploring-panel-wrapper">
     <!-- Lens Icon Toggle (Fixed) -->
-    <button 
-      @click="$emit('toggle')"
-      class="exploring-toggle"
-      :title="isOpen ? 'Close exploring' : 'Open exploring'"
-    >
-      <span class="text-xl">{{ isOpen ? '×' : '🔍' }}</span>
-    </button>
+<button 
+  @click="$emit('toggle')"
+  class="exploring-toggle"
+  :title="isOpen ? 'Close exploring' : 'Open exploring'"
+>
+  <span v-if="isOpen" class="text-xl">×</span>
+  <img v-else src="/lente.png" alt="Search" class="w-5 h-5" />
+</button>
 
     <!-- Side Panel -->
     <Transition name="slide-left">
@@ -97,8 +98,8 @@ const exploringTopics = [
 /* Lens Icon Button */
 .exploring-toggle {
   @apply absolute -left-12 top-0 w-10 h-10;
-  @apply bg-accent-green hover:bg-accent-orange;
-  @apply text-white rounded-lg;
+  @apply bg-gray-100 bg-opacity-70 hover:bg-gray-200 hover:bg-opacity-90; /* Changed for less green and more transparency */
+  @apply text-gray-800 rounded-lg; /* Changed text color for readability on light background */
   @apply flex items-center justify-center;
   @apply shadow-lg;
   @apply motion-safe:transition-all motion-safe:duration-300;
