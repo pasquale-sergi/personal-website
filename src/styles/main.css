@@ -1,0 +1,112 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+* {
+  @apply motion-safe:transition-colors motion-safe:duration-400;
+}
+
+html {
+  @apply scroll-smooth;
+    @apply bg-gradient-to-br from-zen-50 via-zen-100 to-zen-50;
+  @apply dark:from-zen-900 dark:via-zen-800 dark:to-zen-900;
+}
+
+body {
+
+  @apply text-zen-900 dark:text-zen-50;
+  @apply font-sans antialiased;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    @apply !duration-0 !animate-none;
+  }
+
+  html {
+    @apply scroll-auto;
+  }
+}
+
+/* Selection */
+::selection {
+  @apply bg-accent-orange bg-opacity-30 text-zen-900;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-zen-100 dark:bg-zen-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-accent-green rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent-green bg-opacity-80;
+}
+
+/* Links */
+a {
+  @apply relative inline-block text-accent-green hover:text-accent-orange;
+  @apply dark:text-accent-orange dark:hover:text-accent-green;
+}
+
+a::after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-current;
+  @apply motion-safe:transition-all motion-safe:duration-300;
+}
+
+a:hover::after {
+  @apply w-full;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4 {
+  @apply font-serif text-zen-900 dark:text-zen-50;
+  @apply font-bold tracking-tight;
+}
+
+h1 {
+  @apply text-4xl md:text-5xl;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl;
+}
+
+/* Code blocks */
+pre {
+  @apply bg-zen-900 dark:bg-zen-950;
+  @apply text-zen-50 rounded-lg p-4 overflow-x-auto;
+  @apply border border-zen-800 dark:border-zen-700;
+}
+
+code {
+  @apply bg-zen-100 dark:bg-zen-800;
+  @apply text-zen-800 dark:text-zen-100;
+  @apply px-2 py-1 rounded text-sm font-mono;
+}
+
+pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+
+/* Horizontal line */
+hr {
+  @apply border-t border-zen-300 dark:border-zen-700;
+  @apply my-8 md:my-12;
+}

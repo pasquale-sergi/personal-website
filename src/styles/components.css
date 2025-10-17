@@ -1,0 +1,605 @@
+/* Command Palette */
+.command-palette {
+  @apply fixed inset-0 z-50 flex items-start justify-center pt-24;
+  @apply bg-black bg-opacity-50 dark:bg-opacity-70;
+  @apply backdrop-blur-sm;
+}
+
+.command-palette__dialog {
+  @apply w-full max-w-2xl mx-4;
+  @apply bg-zen-50 dark:bg-zen-800;
+  @apply border border-zen-200 dark:border-zen-700;
+  @apply rounded-lg shadow-2xl;
+  @apply overflow-hidden;
+}
+
+.command-palette__input {
+  @apply w-full px-6 py-4;
+  @apply bg-transparent text-zen-900 dark:text-zen-50;
+  @apply border-b border-zen-200 dark:border-zen-700;
+  @apply font-mono text-lg outline-none;
+}
+
+.command-palette__input::placeholder {
+  @apply text-zen-500 dark:text-zen-400;
+}
+
+.command-palette__results {
+  @apply max-h-96 overflow-y-auto;
+}
+
+.command-palette__item {
+  @apply px-6 py-3 cursor-pointer;
+  @apply hover:bg-zen-100 dark:hover:bg-zen-700;
+  @apply border-l-2 border-transparent;
+  transition: all 0.3s ease;
+}
+
+.command-palette__item:hover {
+  @apply border-accent-orange;
+  padding-left: 1.25rem;
+}
+
+.command-palette__item--active {
+  @apply bg-zen-100 dark:bg-zen-700;
+  @apply border-accent-green;
+}
+
+/* Project Card Garden */
+.project-card {
+  position: relative;
+  @apply p-6;
+  @apply bg-white dark:bg-zen-800;
+  @apply border border-zen-200 dark:border-zen-700;
+  @apply rounded-lg;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); /* Smoother bezier curve */
+}
+
+.project-card:hover {
+  @apply shadow-2xl border-accent-orange; /* Stronger shadow */
+  transform: translateY(-8px) scale(1.01); /* Lift more, slightly larger */
+}
+
+.project-card::before {
+  content: '';
+  @apply absolute inset-0 rounded-lg;
+  @apply bg-gradient-to-br from-accent-orange via-transparent to-accent-green;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  @apply pointer-events-none;
+}
+
+.project-card:hover::before {
+  opacity: 0.1;
+}
+
+.project-card__content {
+  @apply relative z-10;
+}
+
+.project-card__title {
+  @apply text-2xl font-serif text-zen-900 dark:text-zen-50;
+  @apply mb-2;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .project-card__title {
+  @apply text-accent-orange;
+}
+
+.project-card__description {
+  @apply text-zen-700 dark:text-zen-300 mb-4 leading-relaxed;
+}
+
+.project-card__tags {
+  @apply flex flex-wrap gap-2 mb-4;
+}
+
+.project-tag {
+  @apply px-3 py-1 text-xs font-mono;
+  @apply bg-zen-100 dark:bg-zen-700;
+  @apply text-zen-700 dark:text-zen-300;
+  @apply rounded-full border border-zen-200 dark:border-zen-600;
+  transition: all 0.3s ease;
+}
+
+.project-tag:hover {
+  @apply bg-accent-orange text-white border-accent-orange;
+}
+
+/* Ambient Sound Toggle */
+.ambient-toggle {
+  @apply fixed bottom-8 right-8 z-40;
+  @apply w-14 h-14 rounded-full;
+  @apply bg-accent-green;
+  @apply text-white flex items-center justify-center;
+  @apply shadow-lg;
+  @apply cursor-pointer;
+  @apply dark:bg-accent-orange;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.ambient-toggle:hover {
+  @apply shadow-xl;
+  @apply dark:bg-accent-green;
+}
+
+.ambient-toggle:hover {
+  @apply bg-accent-orange;
+  @apply dark:bg-accent-green;
+}
+
+.ambient-toggle:active {
+  @apply scale-95;
+}
+
+.ambient-toggle__icon {
+  @apply w-6 h-6;
+}
+
+/* ASCII Art Divider */
+.divider {
+  @apply text-center my-12 md:my-16;
+  @apply text-zen-400 dark:text-zen-600;
+  @apply font-mono text-xs md:text-sm;
+  @apply whitespace-pre-wrap break-words;
+}
+
+/* Keyboard Hint */
+.keyboard-hint {
+  @apply inline-block px-2 py-1 mx-1;
+  @apply bg-zen-100 dark:bg-zen-700;
+  @apply border border-zen-300 dark:border-zen-600;
+  @apply rounded text-xs font-mono text-zen-700 dark:text-zen-300;
+  @apply cursor-pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.keyboard-hint {
+  @apply inline-block px-2 py-1;
+  @apply bg-zen-100 dark:bg-zen-700;
+  @apply border border-zen-300 dark:border-zen-600;
+  @apply rounded text-xs font-mono text-zen-700 dark:text-zen-300;
+  @apply cursor-pointer;
+}
+
+/* Container */
+.container-zen {
+  @apply mx-auto px-4 md:px-8 max-w-6xl;
+}
+
+/* Section */
+.section {
+  @apply py-12 md:py-20;
+}
+
+.section__title {
+  @apply text-3xl md:text-4xl font-serif mb-8;
+  @apply text-zen-900 dark:text-zen-50;
+}
+
+/* Button */
+.btn {
+  @apply inline-flex items-center gap-2 px-6 py-3;
+  @apply bg-accent-green;
+  @apply text-white rounded-lg;
+  @apply font-medium;
+  @apply hover:shadow-lg;
+  @apply dark:bg-accent-orange;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  @apply bg-accent-orange;
+  @apply dark:bg-accent-green;
+}
+
+.btn:active {
+  @apply scale-95;
+}
+
+.btn--secondary {
+  @apply bg-zen-200 dark:bg-zen-700;
+  @apply text-zen-900 dark:text-zen-50;
+}
+
+.btn--secondary:hover {
+  @apply bg-zen-300 dark:bg-zen-600;
+}
+
+/* Focus ring for accessibility */
+.focus-ring {
+  @apply outline-none ring-2 ring-accent-green ring-offset-2;
+  @apply dark:ring-offset-zen-900;
+}
+
+/* Markdown Content Styling */
+.markdown-content {
+  @apply text-left;
+}
+
+.markdown-content h1 {
+  @apply text-3xl md:text-4xl font-serif font-bold;
+  @apply text-zen-900 dark:text-zen-50;
+  @apply mt-8 mb-4 first:mt-0;
+}
+
+.markdown-content h2 {
+  @apply text-2xl md:text-3xl font-serif font-bold;
+  @apply text-zen-900 dark:text-zen-50;
+  @apply mt-6 mb-3;
+}
+
+.markdown-content h3 {
+  @apply text-xl md:text-2xl font-serif font-semibold;
+  @apply text-zen-800 dark:text-zen-100;
+  @apply mt-5 mb-2;
+}
+
+.markdown-content p {
+  @apply text-base md:text-lg;
+  @apply text-zen-700 dark:text-zen-300;
+  @apply leading-relaxed mb-4;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply my-4 ml-6 md:ml-8;
+}
+
+.markdown-content li {
+  @apply text-base md:text-lg text-zen-700 dark:text-zen-300;
+  @apply leading-relaxed mb-2;
+}
+
+.markdown-content ul li {
+  @apply list-disc;
+}
+
+.markdown-content ol li {
+  @apply list-decimal;
+}
+
+.markdown-content strong,
+.markdown-content b {
+  @apply font-bold text-zen-900 dark:text-zen-50;
+}
+
+.markdown-content em,
+.markdown-content i {
+  @apply italic text-zen-800 dark:text-zen-200;
+}
+
+.markdown-content code {
+  @apply bg-zen-100 dark:bg-zen-800;
+  @apply text-zen-800 dark:text-zen-100;
+  @apply px-2 py-1 rounded text-sm font-mono;
+}
+
+.markdown-content pre {
+  @apply bg-zen-900 dark:bg-zen-950;
+  @apply text-zen-50 rounded-lg p-4 overflow-x-auto;
+  @apply border border-zen-800 dark:border-zen-700;
+  @apply my-4;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-accent-green;
+  @apply pl-4 py-2 my-4;
+  @apply text-zen-700 dark:text-zen-300 italic;
+}
+
+.markdown-content a {
+  @apply text-accent-green hover:text-accent-orange;
+  @apply underline;
+}
+
+.markdown-content hr {
+  @apply my-6 border-t border-zen-300 dark:border-zen-700;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse my-4;
+}
+
+.markdown-content th,
+.markdown-content td {
+  @apply border border-zen-300 dark:border-zen-700;
+  @apply px-4 py-2 text-left;
+}
+
+.markdown-content th {
+  @apply bg-zen-100 dark:bg-zen-800;
+  @apply font-bold;
+}
+.btn--orange {
+  @apply bg-accent-orange dark:bg-accent-green;
+}
+
+.btn--orange:hover {
+  @apply bg-accent-green dark:bg-accent-orange;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Glass effect helper */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+
+.animated-border-wrapper {
+  @apply relative;
+}
+
+.animated-border-wrapper::before {
+  content: '';
+  @apply absolute -inset-1 rounded-2xl z-0;
+  @apply bg-gradient-to-r from-accent-green via-accent-orange to-accent-green;
+  background-size: 200% 200%;
+  animation: gradient-flow 10s ease infinite;
+  @apply opacity-20 dark:opacity-30 blur-xl;
+  @apply motion-safe:transition-opacity motion-safe:duration-500;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Floating Zen Particles */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Place it behind everything */
+  pointer-events: none; /* Make it unclickable */
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  bottom: -20px; /* Start below the screen */
+  border-radius: 50%;
+  background-color: var(--particle-color, #c9a876); /* zen-400 */
+  opacity: 0;
+  animation: float-up 20s infinite linear;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 0.2; /* Fade in and out at the start/end */
+  }
+  100% {
+    transform: translateY(-100vh); /* Move up the entire screen height */
+    opacity: 0;
+  }
+}
+
+/* Floating Zen Particles */
+.particle-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  bottom: -20px; /* Start below the screen */
+  border-radius: 50%;
+  /* Adjusted base color, slightly more visible */
+  background-color: var(--particle-color, #b8945f); /* zen-500 */
+  opacity: 0;
+  animation: float-up 25s infinite linear; /* Slightly adjusted default animation duration */
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  /* Increased overall opacity for better visibility */
+  10%,
+  90% {
+    opacity: 0.4; /* Increased from 0.2 to 0.4 */
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+/* Create more variations with increased size, position, and delay */
+.particle:nth-child(1) {
+  width: 6px; /* Larger */
+  height: 6px;
+  left: 10%;
+  animation-duration: 25s;
+}
+.particle:nth-child(2) {
+  width: 10px; /* Larger */
+  height: 10px;
+  left: 20%;
+  animation-duration: 18s;
+  animation-delay: 3s;
+}
+.particle:nth-child(3) {
+  width: 4px; /* Larger */
+  height: 4px;
+  left: 85%;
+  animation-duration: 30s;
+  animation-delay: 1s;
+}
+.particle:nth-child(4) {
+  width: 8px; /* Larger */
+  height: 8px;
+  left: 90%;
+  animation-duration: 15s;
+  animation-delay: 5s;
+}
+.particle:nth-child(5) {
+  width: 5px; /* Larger */
+  height: 5px;
+  left: 5%;
+  animation-duration: 22s;
+  animation-delay: 8s;
+}
+.particle:nth-child(6) {
+  width: 9px; /* Larger */
+  height: 9px;
+  left: 95%;
+  animation-duration: 28s;
+  animation-delay: 2s;
+}
+.particle:nth-child(7) { /* NEW PARTICLE */
+  width: 7px;
+  height: 7px;
+  left: 30%;
+  animation-duration: 20s;
+  animation-delay: 4s;
+}
+.particle:nth-child(8) { /* NEW PARTICLE */
+  width: 4px;
+  height: 4px;
+  left: 70%;
+  animation-duration: 32s;
+  animation-delay: 6s;
+}
+.particle:nth-child(9) { /* NEW PARTICLE */
+  width: 6px;
+  height: 6px;
+  left: 45%;
+  animation-duration: 17s;
+  animation-delay: 9s;
+}
+.particle:nth-child(10) { /* NEW PARTICLE */
+  width: 8px;
+  height: 8px;
+  left: 55%;
+  animation-duration: 26s;
+  animation-delay: 10s;
+}
+
+
+/* Dark mode color - adjusted to be more noticeable */
+.dark .particle {
+  background-color: var(--particle-color, #5a492d); /* zen-800 */
+}
+
+
+/* Dynamic Hero Background */
+.hero-animated-bg {
+  @apply relative overflow-hidden;
+   min-height: 200px;
+  /* Ensure the container is positioned for pseudo-element */
+}
+
+.hero-animated-bg::before {
+  content: '';
+  @apply absolute inset-0 z-0; /* Position behind content */
+  @apply bg-gradient-to-br from-accent-orange via-accent-green to-accent-orange; /* Your colors */
+  background-size: 300% 300%; /* Larger background for animation */
+  animation: hero-gradient-shift 15s ease infinite alternate; /* Smooth, alternating loop */
+  opacity: 0.1; /* Very subtle */
+}
+
+@keyframes hero-gradient-shift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+/* Sticky Header - Add transition for background and shadow */
+header.container-zen {
+  @apply motion-safe:transition-all motion-safe:duration-300 ease-in-out;
+  /* Add initial background if you want a base */
+  background-color: transparent;
+  backdrop-filter: blur(0px); /* Initial state */
+  box-shadow: none; /* Initial state */
+}
+
+/* Class to apply on scroll */
+.scrolled-header {
+  @apply bg-zen-50/80 dark:bg-zen-900/80;
+  backdrop-filter: blur(8px);
+  @apply shadow-lg;
+}
+
+/* links for contact section style*/
+.contact-link {
+  @apply inline-flex items-center gap-2 px-6 py-3;
+  @apply bg-zen-100 dark:bg-zen-800;
+  @apply border border-zen-300 dark:border-zen-700;
+  @apply text-zen-900 dark:text-zen-50;
+  @apply rounded-lg font-medium;
+  @apply hover:bg-accent-green hover:text-white hover:border-accent-green;
+  @apply dark:hover:bg-accent-orange dark:hover:border-accent-orange;
+  @apply motion-safe:transition-all motion-safe:duration-300;
+}
+
+.contact-icon {
+  @apply w-5 h-5;
+  @apply filter dark:invert;
+  @apply motion-safe:transition-transform motion-safe:duration-300;
+}
+
+.contact-link:hover .contact-icon {
+  @apply scale-110;
+}
+
+.content-frame {
+  @apply border border-zen-200/50 dark:border-zen-700/50;
+  @apply rounded-2xl;
+  @apply bg-white/30 dark:bg-zen-900/30;
+  @apply backdrop-blur-sm;
+  @apply shadow-sm;
+  @apply mx-4 md:mx-8;
+}
+
+.app-container {
+  @apply mx-4 md:mx-8 my-4;
+  @apply rounded-3xl;
+  @apply shadow-2xl;
+  @apply bg-gradient-to-br from-zen-50 to-zen-100;
+  @apply dark:from-zen-900 dark:to-zen-800;
+}
