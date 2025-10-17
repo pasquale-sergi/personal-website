@@ -384,7 +384,9 @@ const formatDate = (date) => {
 }
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50 // Becomes true after scrolling 50px
+  const newScrolled = window.scrollY > 50;
+  isScrolled.value = newScrolled;
+  console.log('ScrollY:', window.scrollY, 'isScrolled set to:', newScrolled); // Temp debug
 }
 
 onMounted(() => {
@@ -395,3 +397,4 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+

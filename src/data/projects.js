@@ -53,17 +53,5 @@ Most IoT systems collect data. Sentinella *understands* data. By adapting to eac
 **Want the full technical deep-dive?** Visit [sentinella.xyz](https://sentinella.xyz) for architecture, hardware and software details.
     `,
   },
-  {
-    id: 2,
-    title: 'StockIt',
-    description: 'Personal portfolio built with Vue and Vite.',
-    tags: ['Vue', 'Vite', 'Design'],
-    year: 2025,
-    link: ['sentinella.xyz','https://github.com/pasquale-sergi/Sentinella'],
-    content: `
-      # Portfolio Website
-      
-      Full description...
-    `,
-  },
+
 ]

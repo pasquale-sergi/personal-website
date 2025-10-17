@@ -564,7 +564,6 @@ header.container-zen {
   backdrop-filter: blur(8px);
   @apply shadow-lg;
 }
-
 /* links for contact section style*/
 .contact-link {
   @apply inline-flex items-center gap-2 px-6 py-3;

@@ -1,26 +1,29 @@
 <template>
   <div 
     class="app-container"
-    :class="{ 'desktop-container': !isMobileView }"
+    :class="{ 
+      'desktop-container': !isMobileView,
+      'mobile-container': isMobileView  // Now with strengthened styles
+    }"
   >
     <div class="particle-container">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div> <!-- NEW -->
-    <div class="particle"></div> <!-- NEW -->
-    <div class="particle"></div> <!-- NEW -->
-    <div class="particle"></div> <!-- NEW -->
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div> <!-- NEW -->
+      <div class="particle"></div> <!-- NEW -->
+      <div class="particle"></div> <!-- NEW -->
+      <div class="particle"></div> <!-- NEW -->
     </div>
     <router-view />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted , nextTick} from 'vue'
 
 const isMobileView = ref(window.innerWidth < 768)
 
@@ -31,38 +34,39 @@ const handleResize = () => {
 onMounted(() => {
   window.addEventListener('resize', handleResize)
 })
-
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize)
 })
 </script>
 
 <style>
+/* Ultra-minimal base: Full viewport, no child interference */
+
 .app-container {
   width: 100%;
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: auto; /* Allows full scroll (x hidden comes from globals) */
+  position: relative; /* Only for particles */
+  background: transparent; /* No bg to inherit */
+  box-sizing: border-box;
 }
 
-/* Apply frame styling only on desktop */
-@media (min-width: 768px) {
+
+/* Mobile-only: Enforce full viewport */
+@media (max-width: 767px) {
   .app-container {
-    margin: 1rem 2rem;
-    border-radius: 1.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    background: linear-gradient(to bottom right, #f5f1e8, #ede5d9);
+    width: 100vw !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
   }
-  
-  .dark .app-container {
-    background: linear-gradient(to bottom right, #2c2418, #3d3221);
-  }
-}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  width: 100%;
+  .particle-container {
+    width: 100vw;
+    height: 100vh;
+  }
 }
 </style>

@@ -1,16 +1,17 @@
 <template>
   <div class="mobile-home">
-    <!-- Mobile header -->
+
+    <!-- Mobile hero - FIRST, and taller -->
+    <div class="mobile-hero">
+      <img src="/img4.jpg" alt="Hero" />
+    </div>
+
+    <!-- Mobile header - AFTER hero -->
     <header class="mobile-header">
       <h1>Pasquale</h1>
       <p>Computer & Electronics Engineering Student</p>
       <p class="mobile-university">Università del Salento</p>
     </header>
-
-    <!-- Mobile hero -->
-    <div class="mobile-hero">
-      <img src="/img3.jpg" alt="Hero" />
-    </div>
 
     <!-- About section -->
     <section class="mobile-section">
@@ -173,7 +174,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed , onMounted, nextTick} from 'vue'
 import { projects } from '../data/projects.js'
 import AboutMe from '../components/AboutMe.vue'
 import ZenQuoteWidget from '../components/ZenQuoteWidget.vue'
@@ -238,23 +239,103 @@ const filteredProjects = computed(() => {
   if (!selectedTag.value) return projects
   return projects.filter((project) => project.tags.includes(selectedTag.value))
 })
+
+
+onMounted(async () => {
+  if (window.innerWidth >= 768) return; // Skip on desktop to avoid errors
+
+  await nextTick(); // Wait for DOM render
+  const mobileHome = document.querySelector('.mobile-home');
+  const appContainer = document.querySelector('.app-container');
+  
+  console.group('MobileHome Debug (remove after testing)');
+  console.log('Is Mobile (Client Check):', window.innerWidth < 768);
+  console.log('Viewport Size:', { width: window.innerWidth, height: window.innerHeight });
+  
+  if (appContainer) {
+    console.log('App Container:', {
+      classes: appContainer.className,
+      width: appContainer.offsetWidth,
+      height: appContainer.offsetHeight,
+      computedWidth: window.getComputedStyle(appContainer).width,
+      computedBoxSizing: window.getComputedStyle(appContainer).boxSizing
+    });
+  } else {
+    console.log('App Container: Not found!');
+  }
+  
+  if (mobileHome) {
+    console.log('Mobile Home:', {
+      classes: mobileHome.className,
+      width: mobileHome.offsetWidth,
+      height: mobileHome.offsetHeight,
+      computedWidth: window.getComputedStyle(mobileHome).width,
+      computedBoxSizing: window.getComputedStyle(mobileHome).boxSizing
+    });
+  } else {
+    console.log('Mobile Home: Not found! (Check if component mounted)');
+  }
+  
+  console.groupEnd();
+});
 </script>
 
 <style scoped>
-/* Global mobile styles */
+/* Strengthen root for mobile: Force full expansion (scoped, so safe) */
 .mobile-home {
   width: 100%;
+  height: 100vh; /* Full height */
   min-height: 100vh;
-  background: linear-gradient(to br, #f5f1e8 to #ede5d9);
+  max-width: 100vw; /* Prevent any Tailwind max-w limits */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
+  position: absolute; /* Break out of any parent relative positioning if needed */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Your existing background */
+  background: linear-gradient(to br, #f5f1e8, #ede5d9);
 }
 
+/* Ensure all sections expand to full width */
+.mobile-header,
+.mobile-hero,
+.mobile-section,
+.mobile-projects,
+.mobile-buttons,
+.mobile-carousel-wrapper {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding-left: 1rem; /* Your existing */
+  padding-right: 1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Mobile-only: Prevent carousel/tags from overflowing or shrinking */
+@media (max-width: 767px) {
+  .mobile-home {
+    position: fixed; /* Pin to viewport if parent constraints persist */
+    width: 100vw !important;
+    height: 100vh !important;
+    /* Only use !important here if absolutely needed—test without first */
+  }
+  
+  .mobile-carousel,
+  .mobile-tags,
+  .mobile-project-card {
+    width: 100%;
+    overflow: visible;
+  }
+}
 .mobile-header {
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem; /* Reduced from 1.5rem */
   text-align: center;
-  background: white;
+  background: linear-gradient(to bottom, #f5f1e8, transparent);
   margin: 0;
   width: 100%;
   box-sizing: border-box;
@@ -264,13 +345,13 @@ const filteredProjects = computed(() => {
   font-size: 2.5rem;
   font-family: serif;
   font-weight: bold;
-  margin: 0.5rem 0 0;
+  margin: 0.25rem 0 0; /* Reduced from 0.5rem */
 }
 
 .mobile-header p {
   font-size: 0.875rem;
   color: #b8945f;
-  margin: 0.25rem 0;
+  margin: 0.1rem 0; /* Reduced from 0.25rem */
 }
 
 .mobile-university {
@@ -280,10 +361,11 @@ const filteredProjects = computed(() => {
 
 .mobile-hero {
   width: 100%;
-  height: 180px;
+  height: 150px; /* Much bigger */
   overflow: hidden;
   margin: 0;
   box-sizing: border-box;
+  border-radius: 9%;
 }
 
 .mobile-hero img {
@@ -297,10 +379,12 @@ const filteredProjects = computed(() => {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   margin: 0;
   width: 100%;
-  max-width: 100vw; /* Add this */
+  max-width: 100vw;
   box-sizing: border-box;
-  overflow-x: hidden; /* Add this */
+  overflow-x: hidden;
 }
+
+
 
 .mobile-section h2 {
   font-size: 1.75rem;
@@ -419,7 +503,6 @@ const filteredProjects = computed(() => {
   box-sizing: border-box;
   margin: 0;
 }
-
 .mobile-carousel {
   display: flex;
   gap: 1rem;

@@ -53,4 +53,5 @@ export default {
     },
   },
   plugins: [],
+   safelist: ['app-container', 'mobile-container', 'desktop-container', 'mobile-home'],
 }

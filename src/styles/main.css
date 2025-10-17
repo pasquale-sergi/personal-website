@@ -29,6 +29,8 @@ html, body {
 
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 /* Respect user motion preferences */
@@ -121,4 +123,16 @@ pre code {
 hr {
   @apply border-t border-zen-300 dark:border-zen-700;
   @apply my-8 md:my-12;
+}
+
+@media (max-width: 767px) {
+  html,
+  body {
+    width: 100vw !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+  }
 }
