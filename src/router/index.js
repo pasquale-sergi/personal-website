@@ -3,11 +3,14 @@ import App from '../App.vue'
 import ProjectDetail from '../pages/ProjectDetail.vue'
 import { projects } from '../data/projects.js'  // ← Import once
 import HomePage from '../pages/HomePage.vue'
+import MobileHomePage from '../pages/MobileHomePage.vue'
+
+const isMobile = () => window.innerWidth < 768
 
 const routes = [
   {
     path: '/',
-    component: HomePage,
+    component: () => isMobile() ? MobileHomePage : HomePage,
   },
   {
     path: '/project/:id',
