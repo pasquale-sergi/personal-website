@@ -1,16 +1,17 @@
 <template>
   <div class="mobile-home">
 
-    <!-- Mobile hero - FIRST, and taller -->
-    <div class="mobile-hero">
-      <img src="/img4.jpg" alt="Hero" />
+    <div class="mobile-hero-container">
+     <img src="/img5.jpg" alt="Zen landscape" class="mobile-hero-image" />
     </div>
 
-    <!-- Mobile header - AFTER hero -->
-    <header class="mobile-header">
-      <h1>Pasquale</h1>
-      <p>Computer & Electronics Engineering Student</p>
-      <p class="mobile-university">Università del Salento</p>
+    <!-- 2. NEW: The header text comes AFTER, clean and centered -->
+    <header class="mobile-header-block">
+      <h1 class="mobile-header-name">Pasquale</h1>
+      <p class="mobile-header-title">
+        Computer & Electronics Engineering Student
+      </p>
+      <p class="mobile-header-subtitle">Università del Salento</p>
     </header>
 
     <!-- About section -->
@@ -140,8 +141,14 @@
     <!-- Blog section -->
     <section class="mobile-section">
       <h2>Blog</h2>
-      <div class="mobile-blog-placeholder">
-        📝 Working on it...
+      <div class="flex items-center gap-3 text-zen-600 dark:text-zen-400 justify-center">
+                      
+                <img 
+                  src="/write.png" 
+                  alt="Blog"
+                  class="contact-icon"
+                />
+                <span>Working on it...</span>
       </div>
     </section>
 
@@ -772,5 +779,50 @@ onMounted(async () => {
 .mobile-btn:active {
   background: #d97706;
   transform: scale(0.98);
+}
+
+.mobile-hero-container {
+  width: 100%;
+  height: 220px; /* Give it a substantial, fixed height */
+  overflow: hidden;
+  background-color: #f5f1e8; /* Fallback color */
+}
+
+.mobile-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is key: ensures the image covers the area without distortion */
+  object-position: center 30%; /* Adjust to frame the best part of the image */
+}
+
+/* 2. The Header Text Block */
+.mobile-header-block {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 241, 232, 1),
+    rgba(245, 241, 232, 0)
+  ); /* Fades into the background */
+}
+
+.mobile-header-name {
+  font-family: serif;
+  font-size: 2.75rem; /* Larger and more impactful */
+  font-weight: 600;
+  margin: 0;
+  color: #2c2c2c;
+}
+
+.mobile-header-title {
+  font-size: 1rem;
+  color: #b8945f; /* Your accent color */
+  margin: 0.25rem 0;
+}
+
+.mobile-header-subtitle {
+  font-size: 0.875rem;
+  color: #888;
+  margin: 0.25rem 0 0;
 }
 </style>

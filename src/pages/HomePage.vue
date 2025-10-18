@@ -1,11 +1,12 @@
 <template>
+  <div class="content-frame">
     
  <div class="min-h-screen bg-gradient-to-br from-zen-50 to-zen-100
               dark:from-zen-900 dark:to-zen-800">
     <div ref="heroRef" class="relative hero-animated-bg">
 <div class="relative h-64 md:h-80 lg:h-76 overflow-hidden ">
   <img
-    src="/img4.jpg"
+    src="/img5.jpg"
     alt="Zen garden"
     class="w-full h-full object-cover opacity-100 relative z-10"
     style="object-position: center 60%"
@@ -246,6 +247,9 @@
   </div>
 </section>
     </main>
+    
+  </div>
+    </div>
     <ZenQuoteWidget />
 
     <AboutMe />
@@ -263,7 +267,7 @@
     />
 
 
-  </div>
+
   
 </template>
 
@@ -436,5 +440,6 @@ onUnmounted(() => {
   /* The backdrop blur remains the key to the effect */
   @apply backdrop-blur-md;
 }
+
 </style>
 
