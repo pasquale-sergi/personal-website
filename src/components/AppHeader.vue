@@ -27,7 +27,7 @@ const links = [
         }}</a>
       </nav>
       <a class="button button-small header-cta" href="#proposal"
-        >Angebot erhalten <AppIcon :size="16"
+        >Angebot anfragen <AppIcon :size="16"
       /></a>
       <button
         class="menu-toggle"
@@ -54,7 +54,7 @@ const links = [
         @click="menuOpen = false"
         >{{ link.label }}</a
       ><a href="#proposal" @click="menuOpen = false"
-        >Angebot erhalten <AppIcon :size="16"
+        >Angebot anfragen <AppIcon :size="16"
       /></a>
     </nav>
   </header>
