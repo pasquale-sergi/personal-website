@@ -1,72 +1,19 @@
-<template>
-  <div 
-    class="app-container"
-    :class="{ 
-      'desktop-container': !isMobileView,
-      'mobile-container': isMobileView  // Now with strengthened styles
-    }"
-  >
-    <div class="particle-container">
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div>
-      <div class="particle"></div> <!-- NEW -->
-      <div class="particle"></div> <!-- NEW -->
-      <div class="particle"></div> <!-- NEW -->
-      <div class="particle"></div> <!-- NEW -->
-    </div>
-    <router-view />
-  </div>
-</template>
-
 <script setup>
-import { ref, onMounted, onUnmounted , nextTick} from 'vue'
-
-const isMobileView = ref(window.innerWidth < 768)
-
-const handleResize = () => {
-  isMobileView.value = window.innerWidth < 768
-}
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-})
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
+import AppHeader from "./components/AppHeader.vue";
+import HeroSection from "./components/HeroSection.vue";
+import HowItWorks from "./components/HowItWorks.vue";
+import PricingSection from "./components/PricingSection.vue";
+import CaseStudy from "./components/CaseStudy.vue";
+import ProposalCTA from "./components/ProposalCTA.vue";
+import FAQSection from "./components/FAQSection.vue";
+import AppFooter from "./components/AppFooter.vue";
 </script>
 
-<style>
-/* Ultra-minimal base: Full viewport, no child interference */
-
-.app-container {
-  width: 100%;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-
-  position: relative; /* Only for particles */
-  background: transparent; /* No bg to inherit */
-  box-sizing: border-box;
-}
-
-
-/* Mobile-only: Enforce full viewport */
-@media (max-width: 767px) {
-  .app-container {
-    width: 100vw !important;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-
-  }
-
-  .particle-container {
-    width: 100vw;
-    height: 100vh;
-  }
-}
-</style>
+<template>
+  <a href="#main" class="skip-link">Zum Inhalt springen</a>
+  <AppHeader />
+  <main id="main">
+    <HeroSection /><HowItWorks /><PricingSection /><CaseStudy /><ProposalCTA /><FAQSection />
+  </main>
+  <AppFooter />
+</template>

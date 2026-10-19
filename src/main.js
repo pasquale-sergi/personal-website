@@ -1,12 +1,5 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import "./styles.css";
 
-import './styles/main.css'
-import './styles/components.css'
-// Prevent horizontal scroll
-
-const app = createApp(App);
-app.use(router);
-app.mount('#app');
+createApp(App).mount("#app");
