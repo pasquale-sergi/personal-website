@@ -19,7 +19,7 @@ const values = [
           <strong>CHF 990</strong>
         </div>
         <h1 id="hero-title">
-          Your old website,<br /><span>rebuilt.</span
+          Deine alte Website.<br /><span>Neu gemacht.</span
           ><span class="heading-period" aria-hidden="true"></span>
         </h1>
         <p class="hero-description">
@@ -31,9 +31,6 @@ const values = [
           Du hast schon eine Website? Perfekt. Ich übernehme deine bestehenden
           Inhalte – du musst nicht alles neu vorbereiten.
         </p>
-        <a class="hero-text-link" href="#work"
-          >So kann dein neuer Auftritt aussehen <AppIcon :size="15"
-        /></a>
       </div>
       <BeforeAfterMockup />
     </div>

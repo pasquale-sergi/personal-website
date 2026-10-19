@@ -13,16 +13,16 @@ defineProps({ variant: { type: String, default: "after" }, compact: Boolean });
     <div class="browser-chrome">
       <div class="browser-dots"><i></i><i></i><i></i></div>
       <span class="browser-address"
-        ><AppIcon name="lock" :size="8" /> sportpreise-huber.ch</span
+        ><AppIcon name="lock" :size="8" /> musterbetrieb.ch</span
       ><span class="browser-chrome-more">···</span>
     </div>
     <div v-if="variant === 'before'" class="old-site">
       <div class="old-site-header">
-        <span class="old-logo">Sportpreise <b>HUBER</b></span
+        <span class="old-logo">Muster<b>betrieb</b></span
         ><span>Pokale · Medaillen · Gravuren</span>
       </div>
       <div class="old-site-nav">
-        Home &nbsp; | &nbsp; Pokale &nbsp; | &nbsp; Medaillen &nbsp; | &nbsp;
+        Start &nbsp; | &nbsp; Pokale &nbsp; | &nbsp; Medaillen &nbsp; | &nbsp;
         Kontakt
       </div>
       <div class="old-site-body">
@@ -34,21 +34,21 @@ defineProps({ variant: { type: String, default: "after" }, compact: Boolean });
         </aside>
         <div class="old-site-main">
           <h4>Herzlich willkommen</h4>
-          <p>Ihr Partner für Sportpreise,<br />Pokale und Auszeichnungen.</p>
+          <p>Ihr Partner für Pokale,<br />Medaillen und Auszeichnungen.</p>
           <TrophyArt />
           <div class="old-copy-line"></div>
           <div class="old-copy-line short"></div>
         </div>
       </div>
       <div class="old-site-footer">
-        Sportpreise Huber &nbsp; · &nbsp; Qualität und Tradition
+        Musterbetrieb &nbsp; · &nbsp; Qualität und Tradition
       </div>
     </div>
     <div v-else class="new-site">
       <div class="new-site-header">
         <span class="new-logo"
-          ><span class="new-logo-emblem">h.</span> sportpreise<span
-            >huber</span
+          ><span class="new-logo-emblem">m.</span> muster<span
+            >betrieb</span
           ></span
         ><span class="new-site-nav"
           >Sortiment &nbsp; Über uns &nbsp; Kontakt</span

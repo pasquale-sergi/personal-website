@@ -57,12 +57,12 @@ function submit() {
         autocomplete="url"
         autocapitalize="none"
         spellcheck="false"
-        placeholder="https://your-website.ch"
+        placeholder="https://deine-website.ch"
         required
         :aria-invalid="!!error"
         :aria-describedby="error ? `${location}-error` : undefined"
       /><button class="button" type="submit">
-        Get a proposal <AppIcon :size="17" />
+        Angebot erhalten <AppIcon :size="17" />
       </button>
     </div>
     <p v-if="error" :id="`${location}-error`" class="form-error" role="alert">

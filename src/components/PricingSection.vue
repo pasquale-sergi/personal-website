@@ -15,7 +15,7 @@ const packages = [
       "SEO-Grundlagen eingerichtet",
       "Domain verbinden",
       "2 Korrekturrunden",
-      "Begleitung bis zum Launch",
+      "Begleitung bis zur Veröffentlichung",
     ],
   },
   {
@@ -30,7 +30,7 @@ const packages = [
       "Einfaches Content-Management-System",
       "Kein Designwissen erforderlich",
       "Persönliche Kurzeinführung",
-      "Optionaler Support nach dem Launch",
+      "Optionale Betreuung nach der Veröffentlichung",
     ],
   },
   {

@@ -43,15 +43,15 @@ The submission integration is isolated in `src/lib/proposal.js` and `ProposalFor
 
 ## Page and components
 
-`AppHeader`, `HeroSection`, `BeforeAfterMockup`, `HowItWorks`, `PricingSection`, `CaseStudy`, `ProposalCTA`, `FAQSection`, `AppFooter`, plus shared `ProposalForm`, `WebsiteMockup`, `TrophyArt` and `AppIcon` components.
+`AppHeader`, `HeroSection`, `BeforeAfterMockup`, `HowItWorks`, `PricingSection`, `ProposalCTA`, `FAQSection`, `AppFooter`, plus shared `ProposalForm`, `WebsiteMockup`, `TrophyArt` and `AppIcon` components.
 
-The before/after browsers use responsive CSS and local SVG illustrations. They are explicitly labelled as illustrative examples, not literal screenshots. The project scope follows the supplied brief. There are no testimonials or invented performance statistics.
+The hero's before/after browsers use responsive CSS and local SVG illustrations. They depict the fictional “Musterbetrieb” at `musterbetrieb.ch`, not a real client or literal screenshots. There is no case study section, customer testimonial or invented performance statistic.
 
 The DM Sans variable font is self-hosted under `public/fonts/`; its SIL Open Font License is included there.
 
 ## Before public launch
 
 - Keep the existing Vercel project and domain configuration. A canonical URL and social share image can be added separately.
-- Confirm the final project copy and replace the illustrative mockups with approved real project screenshots if desired.
+- Keep illustrative examples fictional. Obtain the client's explicit consent before publishing any identifying project details or screenshots.
 - Add the business's required legal and privacy information using the owner's verified details.
 - The email-based flow is complete; a form backend is intentionally out of scope.

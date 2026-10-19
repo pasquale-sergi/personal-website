@@ -3,9 +3,8 @@ import { ref } from "vue";
 import AppIcon from "./AppIcon.vue";
 const menuOpen = ref(false);
 const links = [
-  { href: "#home", label: "Home" },
+  { href: "#home", label: "Start" },
   { href: "#ablauf", label: "So geht’s" },
-  { href: "#work", label: "Projekte" },
   { href: "#preise", label: "Preise" },
   { href: "#faq", label: "FAQ" },
 ];
@@ -28,7 +27,7 @@ const links = [
         }}</a>
       </nav>
       <a class="button button-small header-cta" href="#proposal"
-        >Get a proposal <AppIcon :size="16"
+        >Angebot erhalten <AppIcon :size="16"
       /></a>
       <button
         class="menu-toggle"

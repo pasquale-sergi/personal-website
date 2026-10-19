@@ -5,7 +5,7 @@ const active = ref(null);
 const questions = [
   {
     q: "Wie lange dauert ein Projekt?",
-    a: "Ein einfacher Relaunch dauert in der Regel 1–3 Wochen ab Projektstart. Der genaue Zeitplan hängt vom Umfang und deinem Feedback ab und steht im Angebot.",
+    a: "Ein einfacher Relaunch dauert in der Regel 1–3 Wochen ab Projektstart. Der genaue Zeitplan hängt vom Umfang und deiner Rückmeldung ab und steht im Angebot.",
   },
   {
     q: "Was brauche ich dafür?",
@@ -21,7 +21,7 @@ const questions = [
   },
   {
     q: "Gibt es laufende Kosten?",
-    a: "Der Relaunch ist eine einmalige Leistung. Domain, Hosting und gegebenenfalls externe Dienste kosten separat. Ich zeige dir diese Kosten vorab. Laufender Support ist optional.",
+    a: "Der Relaunch ist eine einmalige Leistung. Domain, Hosting und gegebenenfalls externe Dienste kosten separat. Ich zeige dir diese Kosten vorab. Laufende Betreuung ist optional.",
   },
   {
     q: "Was ist, wenn ich mehr Funktionen brauche?",

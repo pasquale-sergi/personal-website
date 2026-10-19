@@ -7,10 +7,10 @@ defineProps({ layout: { type: String, default: "overlap" } });
   <figure
     class="before-after"
     :class="`before-after-${layout}`"
-    aria-label="Illustrativer Vorher-Nachher-Vergleich von Sportpreise Huber"
+    aria-label="Illustrativer Vorher-Nachher-Vergleich für den frei erfundenen Musterbetrieb"
   >
     <div class="mockup-before">
-      <span class="mockup-label label-before"><span></span> Before</span
+      <span class="mockup-label label-before"><span></span> Vorher</span
       ><WebsiteMockup variant="before" :compact="layout === 'overlap'" />
     </div>
     <div class="transformation-arrow" aria-hidden="true">
@@ -26,11 +26,11 @@ defineProps({ layout: { type: String, default: "overlap" } });
     </div>
     <div class="mockup-after">
       <span class="mockup-label label-after"
-        ><span></span> After <span class="label-check">✓</span></span
+        ><span></span> Nachher <span class="label-check">✓</span></span
       ><WebsiteMockup variant="after" />
     </div>
     <figcaption v-if="layout === 'overlap'" class="mockup-caption">
-      <span class="caption-line"></span> Gleicher Betrieb. Ein ganz neuer
+      <span class="caption-line"></span> Fiktives Beispiel. Ein ganz neuer
       Auftritt.
     </figcaption>
   </figure>

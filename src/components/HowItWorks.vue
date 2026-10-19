@@ -11,7 +11,7 @@ const steps = [
   },
   {
     title: "Ich baue sie neu",
-    text: "Du siehst den ersten Entwurf, gibst Feedback – ich kümmere mich um den Rest. Bis zum Launch.",
+    text: "Du siehst den ersten Entwurf, gibst Rückmeldung – ich kümmere mich um den Rest. Bis zur Veröffentlichung.",
   },
 ];
 </script>
@@ -27,7 +27,7 @@ const steps = [
       <h2 id="how-title">
         So einfach funktioniert es<span class="blue-period">.</span>
       </h2>
-      <p>Kein langes Briefing. Keine komplizierten Prozesse.</p>
+      <p>Keine lange Vorbereitung. Keine komplizierten Prozesse.</p>
     </div>
     <div class="steps">
       <article v-for="(step, i) in steps" :key="step.title" class="step">
