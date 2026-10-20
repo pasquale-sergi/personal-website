@@ -2276,3 +2276,138 @@ h1 > span:first-of-type {
     min-height: 44px;
   }
 }
+
+/* Small brand/legal additions share the existing palette and spacing. */
+.footer-email {
+  color: #65715a;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.footer-email:hover {
+  color: var(--blue);
+}
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 12px;
+  color: #65715a;
+}
+.footer-legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.footer-legal a:hover {
+  color: var(--blue);
+}
+.proposal-inner > .personal-trust {
+  max-width: 500px;
+  margin: 22px auto 0;
+  padding-top: 16px;
+  border-top: 1px solid #ffffff18;
+  color: #a9b69c;
+  font-size: 11px;
+  line-height: 1.85;
+}
+.personal-trust strong {
+  display: block;
+  margin-top: 5px;
+  font-weight: 500;
+  color: #d4ddcc;
+  font-size: 12px;
+}
+.proposal-privacy a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal-page {
+  padding-block: 54px 76px;
+}
+.legal-content {
+  max-width: 720px;
+  margin-inline: auto;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.85;
+}
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 24px;
+  color: var(--blue);
+  font-size: 14px;
+}
+.legal-page h1 {
+  font-size: 40px;
+  letter-spacing: -1.3px;
+  line-height: 1.2;
+  margin: 14px 0 24px;
+}
+.legal-page h2 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+  line-height: 1.4;
+  margin: 32px 0 12px;
+}
+.legal-page p + p {
+  margin-top: 14px;
+}
+.legal-page address {
+  font-style: normal;
+}
+.legal-content a:not(.legal-back) {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.legal-page ul {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  list-style: disc;
+}
+.legal-page li + li {
+  margin-top: 6px;
+}
+.legal-notice {
+  margin-top: 20px;
+  padding: 17px 20px;
+  border: 1px solid #dcded5;
+  border-radius: 6px;
+  background: #f0f1eb;
+}
+.legal-notice strong {
+  display: block;
+  font-weight: 600;
+}
+.legal-postal-address {
+  white-space: pre-line;
+}
+@media (max-width: 650px) {
+  .footer-bottom {
+    align-items: center;
+  }
+  .footer-legal {
+    margin-left: auto;
+    gap: 10px;
+  }
+  .footer-email {
+    font-size: 12px;
+  }
+  .legal-page {
+    padding-block: 30px 48px;
+  }
+  .legal-page h1 {
+    font-size: 32px;
+  }
+  .legal-page h2 {
+    font-size: 21px;
+  }
+  .legal-notice {
+    padding: 16px;
+  }
+}

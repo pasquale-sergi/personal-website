@@ -170,13 +170,13 @@ test("optional message submits successfully and selected package is retained", a
     fetchImpl: async (_, options) => {
       const body = JSON.parse(options.body);
       assert.equal(body.message, "");
-      assert.equal(body.packageName, "Relaunch + CMS");
+      assert.equal(body.packageName, "Relaunch mit CMS");
       return Response.json({ ok: true });
     },
   });
   fill(c, "proposal");
   c.state.message = "";
-  c.state.packageName = "Relaunch + CMS";
+  c.state.packageName = "Relaunch mit CMS";
   assert.equal(await c.submit("proposal"), true);
 });
 test("HTTP, network and malformed-success errors preserve entered fields", async () => {

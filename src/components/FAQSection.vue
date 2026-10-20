@@ -17,7 +17,7 @@ const questions = [
   },
   {
     q: "Kann ich die Inhalte später selbst bearbeiten?",
-    a: "Mit dem Paket Relaunch + CMS kannst du Texte, Produkte und Bilder selbst pflegen. Du erhältst eine kurze Einführung. Beim einfachen Relaunch sind spätere Änderungen nach Absprache möglich.",
+    a: "Mit dem Paket Relaunch mit CMS kannst du Texte, Produkte und Bilder selbst pflegen. Du erhältst eine kurze Einführung. Beim einfachen Relaunch sind spätere Änderungen nach Absprache möglich.",
   },
   {
     q: "Gibt es laufende Kosten?",

@@ -1,7 +1,7 @@
 export const MAX_MESSAGE_LENGTH = 3000;
 export const PACKAGES = [
   "Website Relaunch",
-  "Relaunch + CMS",
+  "Relaunch mit CMS",
   "Individuelles Projekt",
 ];
 export const SUBMISSION_ERROR =

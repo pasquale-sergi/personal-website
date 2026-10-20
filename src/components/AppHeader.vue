@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import AppIcon from "./AppIcon.vue";
 const menuOpen = ref(false);
+defineProps({ homePage: { type: Boolean, default: true } });
 const links = [
   { href: "#home", label: "Start" },
   { href: "#ablauf", label: "So geht’s" },
@@ -15,18 +16,23 @@ const links = [
     <div class="container header-inner">
       <a
         class="brand"
-        href="#home"
-        aria-label="Pasquale Sergi – zur Startseite"
+        :href="homePage ? '#home' : '/#home'"
+        aria-label="pasquale.dev – zur Startseite"
         @click="menuOpen = false"
-        ><span>Pasquale Sergi<span class="brand-dot">.</span></span
-        ><small>Websites für Schweizer Kleinunternehmen.</small></a
+        ><span>pasquale<span class="brand-dot">.</span>dev</span
+        ><small>Website-Relaunch für Schweizer KMU.</small></a
       >
       <nav class="desktop-nav" aria-label="Hauptnavigation">
-        <a v-for="link in links" :key="link.href" :href="link.href">{{
-          link.label
-        }}</a>
+        <a
+          v-for="link in links"
+          :key="link.href"
+          :href="`${homePage ? '' : '/'}${link.href}`"
+          >{{ link.label }}</a
+        >
       </nav>
-      <a class="button button-small header-cta" href="#proposal"
+      <a
+        class="button button-small header-cta"
+        :href="homePage ? '#proposal' : '/#proposal'"
         >Angebot anfragen <AppIcon :size="16"
       /></a>
       <button
@@ -50,10 +56,12 @@ const links = [
       <a
         v-for="link in links"
         :key="link.href"
-        :href="link.href"
+        :href="`${homePage ? '' : '/'}${link.href}`"
         @click="menuOpen = false"
         >{{ link.label }}</a
-      ><a href="#proposal" @click="menuOpen = false"
+      ><a
+        :href="homePage ? '#proposal' : '/#proposal'"
+        @click="menuOpen = false"
         >Angebot anfragen <AppIcon :size="16"
       /></a>
     </nav>

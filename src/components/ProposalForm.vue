@@ -53,7 +53,9 @@ async function reset() {
       <span class="success-check"
         ><AppIcon name="check" :size="20" /> Anfrage erhalten</span
       >
-      <h3 :id="id('success')" tabindex="-1">Danke – Anfrage erhalten.</h3>
+      <h3 :id="id('success')" tabindex="-1">
+        Danke – deine Anfrage ist angekommen.
+      </h3>
       <p>
         Ich schaue mir deine Website an und melde mich normalerweise innerhalb
         von 1–2 Werktagen mit einer ersten Einschätzung.
@@ -213,6 +215,9 @@ async function reset() {
           </button>
           <p class="proposal-privacy">
             Deine Angaben verwende ich, um deine Anfrage zu beantworten.
+            <a href="/datenschutz" target="_blank" rel="noopener"
+              >Datenschutz</a
+            >
           </p>
         </div>
       </Transition>

@@ -1,4 +1,4 @@
-# Pasquale Sergi — Website Relaunch
+# pasquale.dev — Website Relaunch
 
 A focused German landing page built with Vue 3, the Composition API, Vite and plain CSS, plus one Vercel contact function. No UI framework, router, database, tracking or external visual assets.
 
@@ -37,7 +37,7 @@ The previous website is preserved on `backup/pre-business-relaunch` at commit `0
 
 Both placements use `ProposalForm.vue` and the shared controller in `src/lib/proposal.js`. Initially only a URL and “Angebot anfragen” are shown. Validating the URL reveals “Fast geschafft.” inline and focuses the email field. Email is required; the message is optional (maximum 3,000 characters). Package buttons preserve the chosen package without adding another required field.
 
-“Anfrage senden” POSTs JSON to `/api/contact`. The API uses Resend's HTTPS API, with no email SDK. It sends a plain-text enquiry to the configured recipient and sets Reply-To to the visitor's validated email. No confirmation email is sent to visitors. The form shows “Wird gesendet…” while pending and only shows “Danke – Anfrage erhalten.” after the provider returns a message ID. This confirms acceptance by the delivery provider, not guaranteed inbox delivery. Errors keep all entered fields and offer the existing direct-email fallback; submitting never opens an email client.
+“Anfrage senden” POSTs JSON to `/api/contact`. The API uses Resend's HTTPS API, with no email SDK. It sends a plain-text enquiry to the configured recipient and sets Reply-To to the visitor's validated email. No confirmation email is sent to visitors. The form shows “Wird gesendet…” while pending and only shows “Danke – deine Anfrage ist angekommen.” after the provider returns a message ID. This confirms acceptance by the delivery provider, not guaranteed inbox delivery. Errors keep all entered fields and offer the existing direct-email fallback; submitting never opens an email client.
 
 Retries of unchanged input reuse a UUID-based Resend idempotency key to prevent duplicate email when a response is lost. No lead data is stored in a database or browser storage. A page reload clears the draft.
 
@@ -72,15 +72,23 @@ Window events `proposal:url-submitted`, `proposal:second-step-opened` and `propo
 
 ## Page and components
 
-`AppHeader`, `HeroSection`, `BeforeAfterMockup`, `HowItWorks`, `PricingSection`, `ProposalCTA`, `FAQSection`, `AppFooter`, plus shared `ProposalForm`, `WebsiteMockup`, `TrophyArt` and `AppIcon` components.
+`AppHeader`, `HeroSection`, `BeforeAfterMockup`, `HowItWorks`, `PricingSection`, `ProposalCTA`, `FAQSection`, `AppFooter`, plus shared `ProposalForm`, `WebsiteMockup`, `TrophyArt` and `AppIcon` components. The legal pages share `LegalPage.vue`, the header and the footer.
 
 The hero's before/after browsers use responsive CSS and local SVG illustrations. They depict the fictional “Musterbetrieb” at `musterbetrieb.ch`, not a real client or literal screenshots. There is no case study section, customer testimonial or invented performance statistic.
 
 The DM Sans variable font is self-hosted under `public/fonts/`; its SIL Open Font License is included there.
 
+## Legal pages and branding
+
+The primary brand is `pasquale.dev`. Vite builds three HTML entries: `/`, `/impressum` and `/datenschutz`. The legal entries are emitted as `dist/impressum/index.html` and `dist/datenschutz/index.html`, with independent static titles, descriptions, canonical URLs and social metadata. No client router or Vercel rewrite is added. Home-section links on legal pages point back to `/#…`.
+
+The owner's **postal address is intentionally missing**. Set the confirmed address in `src/content/legal.js`; until then the Impressum visibly says “Postanschrift noch zu ergänzen”. Do not invent an address, registration, legal entity or VAT number. The owner explicitly chose to leave the placeholder for now.
+
+The privacy text reflects the repository's hosting, Resend email delivery, Outlook contact mailbox, form fields, in-memory drafts, IP-hash throttling and absence of analytics/advertising/storage code. It does not assert a fixed email/log retention period. Before treating the legal information as complete, review the actual provider-account regions, contractual arrangements and mailbox/log retention settings, and update the text if those settings or services change. No provider settings, environment variables, Vercel configuration or DNS were changed for these pages.
+
 ## Before public launch
 
-- Keep the existing Vercel project and domain configuration. A canonical URL and social share image can be added separately.
+- Keep the existing Vercel project and domain configuration. Canonical URLs are set; a social share image can be added separately.
 - Keep illustrative examples fictional. Obtain the client's explicit consent before publishing any identifying project details or screenshots.
-- Add the business's required legal and privacy information using the owner's verified details.
+- Complete the postal address in `src/content/legal.js` and review the legal/provider details described above.
 - Configure the three server-only email variables and verify one intentional live enquiry before promoting the contact form.

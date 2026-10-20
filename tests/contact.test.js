@@ -12,7 +12,7 @@ const valid = {
   website: "example.ch",
   email: "person@example.ch",
   message: "Die Website wirkt alt.\nBitte modernisieren.",
-  packageName: "Relaunch + CMS",
+  packageName: "Relaunch mit CMS",
   requestId: "f02342f3-a057-4ac7-8ad5-ec4cff8472ee",
   companyFax: "",
 };

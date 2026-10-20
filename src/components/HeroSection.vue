@@ -15,7 +15,7 @@ const values = [
     <div class="hero-main">
       <div class="hero-copy">
         <div class="offer-badge">
-          <span class="status-dot"></span> Website-Relaunch ab
+          <span class="status-dot"></span> Website-Relaunch
           <strong>CHF 990</strong>
         </div>
         <h1 id="hero-title">

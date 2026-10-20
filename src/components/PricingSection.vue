@@ -19,7 +19,7 @@ const packages = [
     ],
   },
   {
-    name: "Relaunch + CMS",
+    name: "Relaunch mit CMS",
     price: "1’290",
     description: "Ein neuer Auftritt, den du selbst pflegen kannst.",
     button: "Jetzt starten",

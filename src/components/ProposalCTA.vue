@@ -34,6 +34,12 @@ import { proposalEmail } from "../lib/proposal.js";
       <a class="direct-email" :href="`mailto:${proposalEmail}`"
         >Oder direkt: {{ proposalEmail }} <AppIcon name="up" :size="11"
       /></a>
+      <p class="personal-trust">
+        Direkter Kontakt mit mir – von der ersten Version bis zur
+        Veröffentlichung. Keine Agentur, keine Weitergabe des Projekts.<strong
+          >Pasquale</strong
+        >
+      </p>
     </div>
     <span class="cta-decoration" aria-hidden="true">↗</span>
   </section>
