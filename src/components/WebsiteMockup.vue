@@ -1,7 +1,16 @@
 <script setup>
 import AppIcon from "./AppIcon.vue";
 import TrophyArt from "./TrophyArt.vue";
-defineProps({ variant: { type: String, default: "after" }, compact: Boolean });
+const props = defineProps({
+  variant: { type: String, default: "after" },
+  example: { type: String, default: "generic" },
+  compact: Boolean,
+});
+// Only the approved case study may show the real client's name.
+const brand =
+  props.example === "huber"
+    ? { first: "Sportpreise", second: "Huber", initial: "h", domain: "sportpreise-huber.ch" }
+    : { first: "Dein", second: "Geschäft", initial: "d", domain: "dein-geschaeft.ch" };
 </script>
 
 <template>
@@ -13,16 +22,16 @@ defineProps({ variant: { type: String, default: "after" }, compact: Boolean });
     <div class="browser-chrome">
       <div class="browser-dots"><i></i><i></i><i></i></div>
       <span class="browser-address"
-        ><AppIcon name="lock" :size="8" /> musterbetrieb.ch</span
+        ><AppIcon name="lock" :size="8" /> {{ brand.domain }}</span
       ><span class="browser-chrome-more">···</span>
     </div>
     <div v-if="variant === 'before'" class="old-site">
       <div class="old-site-header">
-        <span class="old-logo">Muster<b>betrieb</b></span
+        <span class="old-logo">{{ brand.first }} <b>{{ brand.second.toUpperCase() }}</b></span
         ><span>Pokale · Medaillen · Gravuren</span>
       </div>
       <div class="old-site-nav">
-        Start &nbsp; | &nbsp; Pokale &nbsp; | &nbsp; Medaillen &nbsp; | &nbsp;
+        Home &nbsp; | &nbsp; Pokale &nbsp; | &nbsp; Medaillen &nbsp; | &nbsp;
         Kontakt
       </div>
       <div class="old-site-body">
@@ -34,22 +43,23 @@ defineProps({ variant: { type: String, default: "after" }, compact: Boolean });
         </aside>
         <div class="old-site-main">
           <h4>Herzlich willkommen</h4>
-          <p>Ihr Partner für Pokale,<br />Medaillen und Auszeichnungen.</p>
+          <p>Ihr Partner für Sportpreise,<br />Pokale und Auszeichnungen.</p>
           <TrophyArt />
           <div class="old-copy-line"></div>
           <div class="old-copy-line short"></div>
         </div>
       </div>
       <div class="old-site-footer">
-        Musterbetrieb &nbsp; · &nbsp; Qualität und Tradition
+        {{ brand.first }} {{ brand.second }} &nbsp; · &nbsp; Qualität und Tradition
       </div>
     </div>
     <div v-else class="new-site">
       <div class="new-site-header">
         <span class="new-logo"
-          ><span class="new-logo-emblem">m.</span> muster<span
-            >betrieb</span
-          ></span
+          ><span class="new-logo-emblem">{{ brand.initial }}.</span>
+          {{ brand.first.toLowerCase() }}<span>{{
+            brand.second.toLowerCase()
+          }}</span></span
         ><span class="new-site-nav"
           >Sortiment &nbsp; Über uns &nbsp; Kontakt</span
         ><span class="new-site-contact">Anfragen <span>↗</span></span>

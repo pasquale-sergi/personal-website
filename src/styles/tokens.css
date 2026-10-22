@@ -1,0 +1,96 @@
+/* Self-hosted fonts (SIL OFL, see public/fonts). Latin subset only. */
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url("/fonts/dm-sans-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter Tight";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-tight-latin.woff2") format("woff2");
+}
+
+:root {
+  /* Colours. Text colours are checked against --color-bg and
+     --color-surface-muted for WCAG AA (4.5:1) at small sizes. */
+  --color-bg: #f8f8f5;
+  --color-surface: #ffffff;
+  --color-surface-soft: #fcfcf9;
+  --color-surface-muted: #f0f1eb;
+  --color-ink: #1f231e;
+  --color-text: #3b4237;
+  --color-muted: #545c4e;
+  --color-eyebrow: #4f6143;
+  --color-line: #e2e4dc;
+  --color-line-strong: #cdd2c4;
+  /* Form field borders need 3:1 against white (WCAG 1.4.11). */
+  --color-input-border: #858d7e;
+  --color-primary: #3f68b3;
+  --color-primary-hover: #2f5598;
+  --color-primary-soft: #e9eef8;
+  --color-primary-line: #8fa8d6;
+  --color-accent: #b5562f;
+  --color-accent-soft: #f7ebe3;
+  --color-dark: #262d25;
+  --color-dark-deep: #1d231c;
+  --color-dark-text: #f4f6ef;
+  --color-dark-muted: #bcc6b1;
+  --color-check: #5d7550;
+  --color-success: #2c5a27;
+  --color-error: #a2302c;
+  --color-focus: #3f68b3;
+
+  /* Typography */
+  --font-heading: "Inter Tight", "DM Sans", Arial, sans-serif;
+  --font-body: "DM Sans", Arial, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.875rem;
+  --fs-base: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --fs-md: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --fs-lg: clamp(1.1875rem, 1.1rem + 0.45vw, 1.375rem);
+  --fs-xl: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
+  --fs-2xl: clamp(1.875rem, 1.45rem + 2vw, 2.875rem);
+  --fs-3xl: clamp(2.625rem, 1.7rem + 4.4vw, 4.625rem);
+  --fs-price: clamp(2.625rem, 2.2rem + 1.8vw, 3.375rem);
+  --lh-tight: 1.08;
+  --lh-heading: 1.18;
+  --lh-body: 1.65;
+  --measure: 65ch;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --section-space: clamp(4.5rem, 3rem + 6vw, 8rem);
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --container: 72rem;
+
+  /* Shape and depth */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgb(31 41 26 / 0.05);
+  --shadow: 0 1px 2px rgb(31 41 26 / 0.04), 0 10px 28px rgb(31 41 26 / 0.06);
+  --shadow-lg: 0 2px 6px rgb(31 41 26 / 0.05), 0 28px 56px rgb(31 41 26 / 0.11);
+  --shadow-primary: 0 1px 2px rgb(47 85 152 / 0.12), 0 14px 32px rgb(47 85 152 / 0.13);
+
+  /* Layout */
+  --header-h: 64px;
+  --tap: 44px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 76px;
+  }
+}

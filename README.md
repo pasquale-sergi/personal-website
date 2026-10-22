@@ -1,6 +1,6 @@
-# pasquale.dev — Website Relaunch
+# Pasquale Sergi — Website Relaunch
 
-A focused German landing page built with Vue 3, the Composition API, Vite and plain CSS, plus one Vercel contact function. No UI framework, router, database, tracking or external visual assets.
+German (de-CH) landing page for pasquale.dev, built with Vue 3, Vite and plain CSS. No UI framework, router, backend, tracking or external runtime assets.
 
 ## Run locally
 
@@ -13,82 +13,40 @@ Use the local URL printed by Vite. For production:
 
 ```sh
 npm test
-npm run build
+npm run build            # production: fails while TODO placeholders are visible
+npm run build:staging    # preview build: same output, TODOs allowed
 npm run preview
 ```
 
-The frontend builds into `dist/`. Vercel also deploys the root `api/contact.js` function; a static-only host cannot deliver enquiries. Both `npm run dev` and `npm run preview` serve the same endpoint locally through a Vite middleware adapter. Copy `.env.example` to ignored `.env.local` to configure local delivery, then restart Vite. Never use real delivery credentials for automated tests.
+`npm run build` builds the client bundle and then pre-renders every page in `src/pages.js` to static HTML (`dist/index.html`, `dist/impressum/index.html`, ...), plus `sitemap.xml`. The browser hydrates the pre-rendered markup. Deploy `dist/` on any static host.
 
-## Existing Vercel deployment
+Pre-deploy checks in the production build:
+- **TODO gate:** if any page still shows `TODO` (text, meta or JSON-LD), the build lists them, deletes `dist/` and exits with code 1. `npm run build:staging` (or `--allow-todos` / `ALLOW_TODOS=1`) skips the gate for preview deployments.
+- **Missing files:** every local `src`/`srcset`/`href` must exist in `dist/`.
 
-This repository is already connected to the Vercel project for `pasquale.dev`. The production branch is `master`. Pushes to that branch use the existing Git integration; no new Vercel project, domain, DNS or ownership configuration is needed.
+`DEBUG_HYDRATION=1 npm run build:staging` logs hydration mismatches in the browser console.
 
-- Framework: Vite (automatic detection).
-- Install: `npm install` (the npm lockfile is committed).
-- Build: `npm run build`.
-- Output: `dist`.
-- Root directory: repository root.
-- Three server-only environment variables are required for email delivery (see below).
-- Vercel detects `api/contact.js` automatically. No `vercel.json`, project changes or SPA rewrites are needed.
+## Content and settings
 
-The previous website is preserved on `backup/pre-business-relaunch` at commit `06ee8a6de8384c426851fed2f4ddc86227668497`.
+- `src/site.config.js`: contact data, prices, Betreuung terms, referral terms, extras and the switches `show.caseStudy`, `show.guarantee`, `offer.freePreview`, `offer.niche`. Change prices and terms here only.
+- `src/content/faq.js`: FAQ, also used for the FAQPage structured data.
+- `src/pages.js`: routes, titles and meta descriptions. `src/head.js`: meta, Open Graph and JSON-LD.
+- `npm run og-image` re-renders `public/og-image.png` from `scripts/og-image.html` with local Chrome.
+- `npm run mockups` renders the before/after illustrations (`src/components/WebsiteMockup.vue`, shown on the dev-only page `/_mockups/`) to AVIF/WebP in `public/images/mockups/`. Run it after changing the mockups or switching `show.caseStudy`; the Huber images are only generated while the case study is on. Needs local Chrome, and ffmpeg with libaom for AVIF.
+- `show.caseStudy` is also a build-time constant: while it is `false`, no case-study code or client name ends up in `dist/`.
+
+## Styles
+
+`src/styles/tokens.css` (colours, type scale, spacing, radii, shadows, fonts), `base.css` (elements, buttons, links, shared cards), `sections.css` (one block per section, mobile-first), `mockup-layout.css` (before/after arrangement). Inter Tight (headings) and DM Sans (body) are self-hosted in `public/fonts/` under the SIL Open Font License.
 
 ## Proposal requests
 
-Both placements use `ProposalForm.vue` and the shared controller in `src/lib/proposal.js`. Initially only a URL and “Angebot anfragen” are shown. Validating the URL reveals “Fast geschafft.” inline and focuses the email field. Email is required; the message is optional (maximum 3,000 characters). Package buttons preserve the chosen package without adding another required field.
+The hero field validates and normalises the URL, then moves focus to the email field of the full form (`#anfrage`). The full form asks for website, email and an optional message and has a hidden honeypot field. Logic: `src/lib/proposal.js` (tested in `tests/`).
 
-“Anfrage senden” POSTs JSON to `/api/contact`. The API uses Resend's HTTPS API, with no email SDK. It sends a plain-text enquiry to the configured recipient and sets Reply-To to the visitor's validated email. No confirmation email is sent to visitors. The form shows “Wird gesendet…” while pending and only shows “Danke – deine Anfrage ist angekommen.” after the provider returns a message ID. This confirms acceptance by the delivery provider, not guaranteed inbox delivery. Errors keep all entered fields and offer the existing direct-email fallback; submitting never opens an email client.
+Delivery is configured in `form` in `src/site.config.js`:
+- **Default (no endpoint):** opens a prepared email to `site.email` in the visitor's mail app.
+- **Endpoint:** set `VITE_FORM_ENDPOINT` (see `.env.example`) to POST `website`, `email`, `message`, `package`, `subject`. `VITE_FORM_ENCODING=form` sends `application/x-www-form-urlencoded` instead of JSON; `form.extraFields` adds static fields a service may need; `VITE_FORM_ACCESS_KEY` fills Web3Forms' `access_key`. On error the visitor sees a message with the direct email address. When an endpoint is set, the Datenschutz page names the form service (`form.serviceName`).
 
-Retries of unchanged input reuse a UUID-based Resend idempotency key to prevent duplicate email when a response is lost. No lead data is stored in a database or browser storage. A page reload clears the draft.
+## Legal pages
 
-### Required production configuration
-
-In the **existing** Vercel project's **Settings → Environment Variables**, add:
-
-| Variable                  | Value                                                                                                 | Scope                                                |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `RESEND_API_KEY`          | An API key with sending permission from your Resend account                                           | Production, and Preview only if you want email there |
-| `CONTACT_RECIPIENT_EMAIL` | `sergi.pasquale@outlook.com`                                                                          | Same scope                                           |
-| `CONTACT_FROM_EMAIL`      | A sender on a domain already verified in Resend, optionally `Pasquale Sergi <sender@verified-domain>` | Same scope                                           |
-
-The visitor's email is Reply-To, never From. A normal Outlook address cannot be used as a Resend sender unless its domain is under your control and verified. Use an existing verified sending domain, or complete Resend's sender-domain verification separately. This implementation does not change DNS, the website domain or Vercel project settings. Resend's test sender has account-recipient restrictions and is not a general production sender.
-
-After saving the variables, **redeploy the latest `master` production deployment** so the function receives them. Then send one intentional enquiry from the live form and verify the email in your inbox/Resend delivery logs. Until these values are configured, the endpoint returns HTTP 503 and the form shows its recoverable error; production delivery must not be considered operational yet.
-
-`VITE_PROPOSAL_EMAIL` remains an optional, public fallback-contact override. It defaults to `sergi.pasquale@outlook.com` and does not configure the API recipient. All `VITE_` values are public; never prefix any provider credentials with `VITE_`. Local `.env*` files are ignored; `.env.example` contains no credentials.
-
-### Validation and spam protection
-
-- Shared client/server URL, email and message validation; safe HTTP(S) URLs only, no credentials in URLs, bounded text lengths and no email-header injection.
-- Honeypot field, same-origin browser requests, JSON-only POST endpoint and a 12 KB body limit. Submitted websites are not fetched by the server.
-- Five attempts per IP per ten-minute window, bounded to 1,000 entries per warm function instance. Only IP hashes and counters are held temporarily. This is best-effort instance-local throttling, not a global distributed limit; no database or CAPTCHA is added.
-- No success response for blocked, unconfigured or failed delivery. API responses are not cached, and provider errors/credentials are not exposed to visitors.
-
-### Analytics hooks and tests
-
-Window events `proposal:url-submitted`, `proposal:second-step-opened` and `proposal:enquiry-submitted` contain only `{ location }` (`hero` or `proposal`), with no personal data. No analytics dependency or tracking is installed.
-
-`npm test` covers shared validation, both form flows, pending/success/error states, retries, optional messages, server validation, honeypot, throttling and provider errors. External provider calls are injected mocks; automated tests never send real mail. Browser QA may temporarily mock `/api/contact` using the browser's fetch API; no mock-success switch exists in production code.
-
-## Page and components
-
-`AppHeader`, `HeroSection`, `BeforeAfterMockup`, `HowItWorks`, `PricingSection`, `ProposalCTA`, `FAQSection`, `AppFooter`, plus shared `ProposalForm`, `WebsiteMockup`, `TrophyArt` and `AppIcon` components. The legal pages share `LegalPage.vue`, the header and the footer.
-
-The hero's before/after browsers use responsive CSS and local SVG illustrations. They depict the fictional “Musterbetrieb” at `musterbetrieb.ch`, not a real client or literal screenshots. There is no case study section, customer testimonial or invented performance statistic.
-
-The DM Sans variable font is self-hosted under `public/fonts/`; its SIL Open Font License is included there.
-
-## Legal pages and branding
-
-The primary brand is `pasquale.dev`. Vite builds three HTML entries: `/`, `/impressum` and `/datenschutz`. The legal entries are emitted as `dist/impressum/index.html` and `dist/datenschutz/index.html`, with independent static titles, descriptions, canonical URLs and social metadata. No client router or Vercel rewrite is added. Home-section links on legal pages point back to `/#…`.
-
-The owner's **postal address is intentionally missing**. Set the confirmed address in `src/content/legal.js`; until then the Impressum visibly says “Postanschrift noch zu ergänzen”. Do not invent an address, registration, legal entity or VAT number. The owner explicitly chose to leave the placeholder for now.
-
-The privacy text reflects the repository's hosting, Resend email delivery, Outlook contact mailbox, form fields, in-memory drafts, IP-hash throttling and absence of analytics/advertising/storage code. It does not assert a fixed email/log retention period. Before treating the legal information as complete, review the actual provider-account regions, contractual arrangements and mailbox/log retention settings, and update the text if those settings or services change. No provider settings, environment variables, Vercel configuration or DNS were changed for these pages.
-
-## Before public launch
-
-- Keep the existing Vercel project and domain configuration. Canonical URLs are set; a social share image can be added separately.
-- Keep illustrative examples fictional. Obtain the client's explicit consent before publishing any identifying project details or screenshots.
-- Complete the postal address in `src/content/legal.js` and review the legal/provider details described above.
-- Configure the three server-only email variables and verify one intentional live enquiry before promoting the contact form.
+`/impressum/` and `/datenschutz/` contain the final texts. The Datenschutzerklärung names Cloudflare (Cloudflare Pages) as hosting and, when a form endpoint is set, `form.serviceName` (Web3Forms) as form service. Update both pages if providers change.

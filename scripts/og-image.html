@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "DM Sans"; font-weight: 100 1000; src: url("../public/fonts/dm-sans-latin.woff2") format("woff2"); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { font-family: "DM Sans", sans-serif; background: #f8f8f5; color: #262925; display: grid; grid-template-columns: 1.08fr 1fr; align-items: center; gap: 40px; padding: 0 70px 0 80px; position: relative; }
+  body::after { content: ""; position: absolute; inset: auto 0 0 0; height: 14px; background: #272e26; }
+  .badge { display: inline-flex; align-items: center; gap: 10px; font-size: 21px; color: #565c51; border: 1.5px solid #dedfd7; background: #f0f1eb; border-radius: 8px; padding: 10px 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #648457; }
+  body > div:nth-child(2) { margin-top: 64px; }
+  h1 { font-size: 84px; line-height: 1.04; letter-spacing: -4.4px; font-weight: 600; margin: 30px 0 28px; }
+  h1 span { color: #6e7468; }
+  p { font-size: 25px; line-height: 1.45; color: #5d6457; }
+  p strong { color: #262925; font-weight: 650; }
+  .brand { position: absolute; left: 80px; top: 40px; font-size: 27px; font-weight: 700; letter-spacing: -1px; }
+  .brand i, .blue { color: #426bb7; font-style: normal; }
+  .window { border: 1.5px solid #d3d6cc; border-radius: 12px; background: #fff; box-shadow: 0 30px 60px #31392c1f, 0 4px 10px #31392c12; overflow: hidden; transform: rotate(2deg); }
+  .chrome { height: 40px; background: #f5f5f2; border-bottom: 1px solid #e4e6df; display: flex; align-items: center; gap: 8px; padding: 0 16px; }
+  .chrome i { width: 11px; height: 11px; border-radius: 50%; background: #e1e3dc; }
+  .addr { margin-left: 18px; flex: 1; height: 22px; border-radius: 6px; background: #fff; border: 1px solid #e4e6df; font-size: 12px; color: #8a9083; display: flex; align-items: center; padding-left: 10px; }
+  .site { padding: 30px 32px 34px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #7a8072; }
+  .logo { font-weight: 700; color: #262925; font-size: 16px; }
+  .cta-pill { background: #262925; color: #fff; border-radius: 20px; padding: 6px 13px; font-size: 12px; }
+  .eyebrow { font-size: 11px; letter-spacing: 2px; color: #8a8f80; margin-top: 40px; }
+  .site h2 { font-size: 38px; line-height: 1.05; letter-spacing: -1.6px; margin-top: 12px; font-weight: 600; }
+  .lines { margin-top: 18px; display: grid; gap: 9px; }
+  .lines span { height: 9px; border-radius: 5px; background: #eceee7; }
+  .lines span:last-child { width: 62%; }
+  .row { display: flex; gap: 12px; margin-top: 26px; }
+  .row span { flex: 1; height: 70px; border-radius: 8px; background: #f0f1eb; border: 1px solid #e6e8df; }
+  .row span:first-child { background: #dfe7f5; border-color: #cfdaef; }
+  .label { position: absolute; right: 26px; top: -24px; background: #e5ebdd; color: #3f5a32; font-size: 17px; font-weight: 600; padding: 8px 14px; border-radius: 6px; transform: rotate(-2deg); z-index: 2; border: 1px solid #d3dcc7; }
+  .art { position: relative; }
+</style>
+</head>
+<body>
+  <div class="brand">Pasquale Sergi<i>.</i></div>
+  <div>
+    <span class="badge"><span class="dot"></span>Für Schweizer Kleinunternehmen</span>
+    <h1>Deine alte Website.<br /><span>Neu gemacht<span class="blue">.</span></span></h1>
+    <p>Website-Relaunch ab <strong>CHF 990</strong><br />Fixer Preis · Inhalte werden übernommen</p>
+  </div>
+  <div class="art">
+    <span class="label">Nachher ✓</span>
+    <div class="window">
+      <div class="chrome"><i></i><i></i><i></i><span class="addr">deine-firma.ch</span></div>
+      <div class="site">
+        <div class="nav"><span class="logo">Deine Firma</span><span>Angebot &nbsp; Über uns &nbsp; <span class="cta-pill">Kontakt</span></span></div>
+        <div class="eyebrow">SEIT VIELEN JAHREN FÜR DICH DA</div>
+        <h2>Klar. Modern.<br />Gut zu finden.</h2>
+        <div class="lines"><span></span><span></span></div>
+        <div class="row"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

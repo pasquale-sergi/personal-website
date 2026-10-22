@@ -1,50 +1,59 @@
 <script setup>
 import AppIcon from "./AppIcon.vue";
 import { focusProposal } from "../lib/proposal.js";
+import {
+  offer,
+  prices,
+  extras,
+  vatNote,
+  show,
+  terms,
+  chf,
+} from "../site.config.js";
 const packages = [
   {
-    name: "Website Relaunch",
-    price: "990",
-    description: "Deine bestehende Website. Rundum erneuert.",
-    button: "Jetzt starten",
+    name: "Website-Relaunch",
+    price: chf(prices.relaunch),
+    description: "Deine bestehende Website, rundum erneuert.",
+    button: "Angebot anfragen",
     features: [
       "Bis zu 5 Seiten",
-      "Modernes, responsives Design",
-      "Bestehende Inhalte übernommen",
-      "Kontaktformular / E-Mail-Anbindung",
-      "SEO-Grundlagen eingerichtet",
+      "Modernes Design, gut lesbar auf dem Handy",
+      "Bestehende Texte und Bilder übernommen",
+      "Kontaktformular oder E-Mail-Anbindung",
+      "SEO-Grundlagen und Weiterleitung alter Adressen",
       "Domain verbinden",
-      "2 Korrekturrunden",
-      "Begleitung bis zur Veröffentlichung",
+      offer.revisions,
+      "Begleitung bis zum Launch",
     ],
   },
   {
     name: "Relaunch mit CMS",
-    price: "1’290",
+    price: chf(prices.cms),
     description: "Ein neuer Auftritt, den du selbst pflegen kannst.",
-    button: "Jetzt starten",
+    button: "Angebot anfragen",
     popular: true,
     features: [
-      "Alles aus dem Website Relaunch",
-      "Texte, Produkte & Bilder selbst ändern",
-      "Einfaches Content-Management-System",
-      "Kein Designwissen erforderlich",
-      "Persönliche Kurzeinführung",
-      "Optionale Betreuung nach der Veröffentlichung",
+      "Alles aus dem Website-Relaunch",
+      "Texte, Bilder und Produkte selbst ändern",
+      "Einfaches Content-Management-System (CMS)",
+      "Kein Technikwissen nötig",
+      "Persönliche Einführung",
+      offer.revisions,
     ],
   },
   {
     name: "Individuelles Projekt",
     price: null,
     description: "Du brauchst mehr? Wir finden die passende Lösung.",
+    examples:
+      "z.B. Onlineshop, Buchungssystem, mehrsprachige Website, Automationen",
     button: "Projekt anfragen",
     features: [
       "Grössere Websites",
-      "Buchungssysteme",
-      "Onlineshop",
-      "Schnittstellen & Integrationen",
-      "Mehrsprachige Websites",
+      "Schnittstellen zu anderen Systemen",
       "Individuelle Anforderungen",
+      "Fixpreis nach kurzem Gespräch",
     ],
   },
 ];
@@ -62,7 +71,7 @@ const packages = [
         <h2 id="pricing-title">
           Guter Auftritt. Klare Preise<span class="blue-period">.</span>
         </h2>
-        <p>Klare Pakete, keine versteckten Kosten.</p>
+        <p>Ein fixer Preis für den Relaunch. Du weisst vorher, was du bekommst.</p>
       </div>
       <div class="pricing-grid">
         <article
@@ -72,7 +81,7 @@ const packages = [
           :class="{ 'pricing-popular': pkg.popular }"
         >
           <div v-if="pkg.popular" class="popular-label">
-            <span>✦</span> Beliebteste Wahl
+            <span aria-hidden="true">✦</span> Beliebteste Wahl
           </div>
           <div class="pricing-card-top">
             <h3>{{ pkg.name }}</h3>
@@ -85,12 +94,13 @@ const packages = [
               >
             </div>
             <span class="price-note">{{
-              pkg.price
-                ? "Einmalig. Klar vereinbart."
-                : "Individuelles Angebot. Klar definiert."
+              pkg.price ? "Einmaliger Fixpreis." : "Individuelles Angebot."
             }}</span>
+            <p v-if="pkg.examples" class="pricing-examples">
+              {{ pkg.examples }}
+            </p>
           </div>
-          <ul>
+          <ul class="check-list">
             <li v-for="feature in pkg.features" :key="feature">
               <AppIcon name="check" :size="15" />{{ feature }}
             </li>
@@ -99,16 +109,60 @@ const packages = [
             class="button"
             :class="pkg.popular ? '' : 'button-secondary'"
             type="button"
+            :aria-label="`${pkg.button}: ${pkg.name}`"
             @click="focusProposal(pkg.name)"
           >
             {{ pkg.button }} <AppIcon :size="17" />
           </button>
         </article>
       </div>
+
+      <p class="pricing-care">
+        <AppIcon name="server" :size="17" />
+        <span
+          >Betreuung und Hosting optional: {{ terms.careYearly }},
+          <a href="#betreuung">siehe unten</a>.</span
+        >
+      </p>
+
+      <div class="pricing-details">
+        <div>
+          <h3>Im Fixpreis enthalten</h3>
+          <ul class="check-list">
+            <li>
+              <AppIcon name="check" :size="15" />Bestehende Texte und Bilder
+              übernehmen
+            </li>
+            <li><AppIcon name="check" :size="15" />{{ offer.revisions }}</li>
+            <li>
+              <AppIcon name="check" :size="15" />Weiterleitung alter
+              Seiten-Adressen
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Nicht enthalten, auf Wunsch extra</h3>
+          <ul class="check-list">
+            <li><AppIcon name="plus" :size="15" />Neue Texte schreiben</li>
+            <li><AppIcon name="plus" :size="15" />Fotografie</li>
+            <li><AppIcon name="plus" :size="15" />Übersetzungen</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Praktische Extras</h3>
+          <ul class="extras-list">
+            <li v-for="extra in extras" :key="extra.name">
+              <span>{{ extra.name }}</span
+              ><span class="extra-price">CHF {{ chf(extra.price) }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <p class="pricing-footnote">
-        <AppIcon name="shield" :size="15" /> Du erhältst immer ein verbindliches
-        Angebot, bevor es losgeht. Hosting und externe Dienste werden separat
-        vereinbart.
+        <AppIcon name="shield" :size="15" /> Du erhältst immer ein schriftliches
+        Angebot, bevor es losgeht. Zahlung: {{ offer.paymentTerms }}.
+        <template v-if="show.vatNote">{{ vatNote }}</template>
       </p>
     </div>
   </section>

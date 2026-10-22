@@ -1,0 +1,14 @@
+{
+  "generic-before": {
+    "width": 1280,
+    "height": 968
+  },
+  "generic-after": {
+    "width": 1280,
+    "height": 899
+  },
+  "formats": [
+    "avif",
+    "webp"
+  ]
+}

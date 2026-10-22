@@ -1,18 +1,28 @@
 <script setup>
+import { defineAsyncComponent } from "vue";
 import AppHeader from "./components/AppHeader.vue";
-import HeroSection from "./components/HeroSection.vue";
-import HowItWorks from "./components/HowItWorks.vue";
-import PricingSection from "./components/PricingSection.vue";
-import ProposalCTA from "./components/ProposalCTA.vue";
-import FAQSection from "./components/FAQSection.vue";
 import AppFooter from "./components/AppFooter.vue";
+import HomePage from "./pages/HomePage.vue";
+import ImpressumPage from "./pages/ImpressumPage.vue";
+import DatenschutzPage from "./pages/DatenschutzPage.vue";
+
+defineProps({ page: { type: String, default: "home" } });
+const views = {
+  home: HomePage,
+  impressum: ImpressumPage,
+  datenschutz: DatenschutzPage,
+  // Removed from production builds entirely.
+  mockups: import.meta.env.DEV
+    ? defineAsyncComponent(() => import("./pages/MockupSheet.vue"))
+    : null,
+};
 </script>
 
 <template>
   <a href="#main" class="skip-link">Zum Inhalt springen</a>
   <AppHeader />
   <main id="main">
-    <HeroSection /><HowItWorks /><PricingSection /><ProposalCTA /><FAQSection />
+    <component :is="views[page] || HomePage" />
   </main>
   <AppFooter />
 </template>

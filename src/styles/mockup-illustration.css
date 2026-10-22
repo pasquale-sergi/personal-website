@@ -1,0 +1,340 @@
+/* Browser-window illustrations (before/after). Sizes use container units, so
+   they scale with the mockup width. Only used by the dev page /_mockups/,
+   which `npm run mockups` turns into images. */
+.browser-window {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #d3d6cc;
+  border-radius: 7px;
+  background: #fff;
+  box-shadow:
+    0 13px 35px #31392c0d,
+    0 2px 5px #31392c0a;
+  container-type: inline-size;
+  isolation: isolate;
+}
+.browser-chrome {
+  height: 6.7cqw;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 3cqw;
+  background: #f5f5f2;
+  border-bottom: 1px solid #e3e5de;
+  position: relative;
+}
+.browser-dots {
+  display: flex;
+  gap: 1cqw;
+}
+.browser-dots i {
+  width: 1.4cqw;
+  height: 1.4cqw;
+  border-radius: 50%;
+  background: #d5d9d1;
+}
+.browser-dots i:first-child {
+  background: #dfb8ab;
+}
+.browser-dots i:nth-child(2) {
+  background: #e1d1a5;
+}
+.browser-dots i:nth-child(3) {
+  background: #b9c9a9;
+}
+.browser-address {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1cqw;
+  font-size: 1.6cqw;
+  color: #989d91;
+  border: 1px solid #e8e9e3;
+  border-radius: 3px;
+  background: #fbfcf8;
+  height: 3.5cqw;
+  width: 48%;
+  margin: auto;
+}
+.browser-address svg {
+  width: 1.6cqw;
+  height: 1.6cqw;
+}
+.browser-chrome-more {
+  font-size: 2.8cqw;
+  color: #a5a99e;
+}
+.old-site {
+  background: #eeede7;
+  padding: 0 3.5cqw 2.5cqw;
+  font-family: Arial, sans-serif;
+  color: #5f5141;
+}
+.old-site-header {
+  padding: 3.5cqw 2cqw 3cqw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+.old-logo {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 4cqw;
+  color: #53442d;
+}
+.old-logo b {
+  font-size: 4.4cqw;
+  color: #a58435;
+}
+.old-site-header > span:last-child {
+  font-size: 1.6cqw;
+  color: #9c968a;
+}
+.old-site-nav {
+  background: #8b2029;
+  color: #fff;
+  font-size: 1.9cqw;
+  padding: 2cqw 3cqw;
+}
+.old-site-body {
+  display: flex;
+  min-height: 41cqw;
+  background: #fff;
+}
+.old-site-body aside {
+  width: 27%;
+  padding: 3cqw 1.8cqw;
+  background: #e5e0d4;
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+  border-right: 1px solid #d6ccbb;
+  font-size: 2cqw;
+  color: #655b48;
+}
+.old-site-body aside b {
+  font-size: 2.3cqw;
+  border-bottom: 1px solid #b8ae9d;
+  padding-bottom: 1.6cqw;
+  color: #6c4f2c;
+}
+.old-site-body aside span:first-of-type {
+  color: #8b2029;
+}
+.old-site-main {
+  padding: 3.8cqw 3.5cqw 2cqw;
+  flex: 1;
+}
+.old-site-main h4 {
+  font-family: Georgia, serif;
+  font-size: 3.2cqw;
+  color: #8e3032;
+  line-height: 1.2;
+  font-weight: normal;
+}
+.old-site-main p {
+  font-size: 2.1cqw;
+  line-height: 1.6;
+  margin-top: 1.7cqw;
+}
+.old-site-main .trophy-art {
+  width: 58%;
+  height: 21cqw;
+  margin: 0 auto;
+}
+.old-copy-line {
+  background: #e9e6df;
+  height: 0.7cqw;
+  width: 95%;
+  margin: 1cqw 0;
+}
+.old-copy-line.short {
+  width: 72%;
+}
+.old-site-footer {
+  font-size: 1.4cqw;
+  padding-top: 1.7cqw;
+  text-align: center;
+  color: #9a9489;
+}
+.new-site {
+  background: #f8f8f3;
+  color: #243e2c;
+}
+.new-site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3.2cqw 4.3cqw;
+  border-bottom: 1px solid #e6e8df;
+  gap: 2cqw;
+}
+.new-logo {
+  display: flex;
+  align-items: center;
+  font-size: 2.4cqw;
+  font-weight: 450;
+  letter-spacing: -0.12cqw;
+  white-space: nowrap;
+}
+.new-logo > span:last-child {
+  font-weight: 750;
+}
+.new-logo-emblem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.7cqw;
+  height: 4.7cqw;
+  background: #244a31;
+  color: #f4f2df;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 4cqw;
+  letter-spacing: -0.5cqw;
+  padding-right: 0.5cqw;
+  margin-right: 1.6cqw;
+}
+.new-site-nav {
+  font-size: 1.6cqw;
+  color: #6a7463;
+  word-spacing: 0.6cqw;
+}
+.new-site-contact {
+  font-size: 1.6cqw;
+  padding: 1.5cqw 1.8cqw;
+  background: #e7ebdf;
+  border: 1px solid #d9dfd0;
+  display: flex;
+  gap: 2.4cqw;
+  align-items: center;
+  white-space: nowrap;
+}
+.new-site-hero {
+  display: grid;
+  grid-template-columns: 49% 51%;
+  padding: 5.3cqw 4.5cqw 5cqw;
+  position: relative;
+  overflow: hidden;
+  min-height: 47cqw;
+}
+.new-site-copy {
+  z-index: 1;
+}
+.new-site-eyebrow {
+  font-size: 1.1cqw;
+  letter-spacing: 0.26cqw;
+  color: #697b5c;
+}
+.new-site-copy h4 {
+  font-size: 6.2cqw;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.3cqw;
+  margin-top: 3cqw;
+  white-space: nowrap;
+}
+.new-site-copy h4 em {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-size: 6.5cqw;
+  letter-spacing: -0.3cqw;
+}
+.new-site-copy p {
+  font-size: 1.65cqw;
+  line-height: 1.65;
+  margin-top: 3cqw;
+  color: #7d8370;
+}
+.new-site-button {
+  display: inline-flex;
+  gap: 3cqw;
+  background: #23472f;
+  color: #fff;
+  padding: 1.7cqw 2.5cqw;
+  margin-top: 3cqw;
+  font-size: 1.65cqw;
+  align-items: center;
+}
+.new-site-art {
+  position: relative;
+  align-self: center;
+  height: 36cqw;
+}
+.new-site-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #e2e6d8;
+  border-radius: 50%;
+}
+.new-site-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 3cqw;
+  border: 1px solid #e7eadf;
+  border-radius: 50%;
+}
+.new-site-art .trophy-art {
+  position: absolute;
+  inset: 0;
+  width: 110%;
+  height: 100%;
+  left: -5%;
+  filter: drop-shadow(0 4px 3px #20351f0a);
+}
+.new-art-caption {
+  position: absolute;
+  bottom: -2cqw;
+  right: 7cqw;
+  font-size: 1.05cqw;
+  letter-spacing: 0.2cqw;
+  color: #89947e;
+}
+.new-site-bottom {
+  padding: 2.4cqw 4.5cqw;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e2e6da;
+  color: #818876;
+  font-size: 1.35cqw;
+  background: #f1f3ea;
+}
+.new-site-bottom > span:first-child {
+  color: #486040;
+  font-style: italic;
+}
+.new-site-bottom > span:last-child > span {
+  margin-left: 1.4cqw;
+}
+.browser-chrome {
+  font-size: 2cqw;
+  line-height: 1.2;
+}
+.old-site {
+  font-size: 2cqw;
+  line-height: 1.35;
+}
+.new-site {
+  font-size: 2cqw;
+  line-height: 1.3;
+}
+.new-site-copy {
+  line-height: 1.2;
+}
+.new-site-hero {
+  padding-block: 4cqw;
+  min-height: 43cqw;
+}
+.new-site-copy h4 {
+  font-size: 5.4cqw;
+  margin-top: 2cqw;
+}
+.new-site-copy h4 em {
+  font-size: 5.7cqw;
+}
+.new-site-copy p,
+.new-site-button {
+  margin-top: 2cqw;
+}
+

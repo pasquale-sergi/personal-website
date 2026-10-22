@@ -1,237 +1,240 @@
 <script setup>
-import { computed, nextTick, watch } from "vue";
+import { reactive, ref, watch } from "vue";
 import AppIcon from "./AppIcon.vue";
-import { proposal, proposalEmail } from "../lib/proposal.js";
-import { MAX_MESSAGE_LENGTH } from "../../shared/contact.js";
+import {
+  website,
+  selectedPackage,
+  normalizeWebsite,
+  validateProposal,
+  focusProposal,
+  submitProposal,
+  proposalEmail,
+} from "../lib/proposal.js";
+import { offer } from "../site.config.js";
+
+// "hero": URL field only, hands over to the full form at #anfrage.
+// "proposal": full request form.
 const props = defineProps({ location: { type: String, default: "hero" } });
-const { state } = proposal;
-const detailsOpen = computed(
-  () => state.step === "details" && state.activeForm === props.location,
-);
-const success = computed(() => state.step === "success");
-const websiteError = computed(() =>
-  state.activeForm === props.location ? state.errors.website : "",
-);
+const full = props.location === "proposal";
 const id = (name) => `${props.location}-${name}`;
-async function focusField(name) {
-  await nextTick();
-  document.getElementById(id(name))?.focus({ preventScroll: false });
+
+const email = ref("");
+const message = ref("");
+const honeypot = ref("");
+const errors = reactive({});
+const status = ref("idle"); // idle | loading | mailto | sent | error
+
+watch([website, email], () => {
+  delete errors.website;
+  delete errors.email;
+  // Keep the thank-you message when the fields were cleared after sending.
+  const clearedAfterSend = status.value === "sent" && !website.value && !email.value;
+  if (status.value !== "loading" && !clearedAfterSend) status.value = "idle";
+});
+
+function focusFirstError() {
+  const field = errors.website ? "website" : "email";
+  document.getElementById(id(field))?.focus();
 }
-watch(detailsOpen, (open) => {
-  if (open) focusField("email");
-});
-watch(success, (complete) => {
-  if (complete && state.activeForm === props.location) focusField("success");
-});
+
 async function submit() {
-  if (!detailsOpen.value) {
-    if (!proposal.openDetails(props.location)) await focusField("website");
+  if (!full) {
+    const url = normalizeWebsite(website.value);
+    if (!url) {
+      errors.website = "Bitte gib eine gültige Website ein, z.B. deine-firma.ch.";
+      focusFirstError();
+      return;
+    }
+    website.value = url;
+    focusProposal(selectedPackage.value, "proposal-email");
     return;
   }
-  await proposal.submit(props.location);
-  if (Object.keys(state.errors).length)
-    await focusField(Object.keys(state.errors)[0]);
-}
-async function edit() {
-  proposal.editUrl(props.location);
-  await focusField("website");
-}
-async function reset() {
-  proposal.reset();
-  await focusField("website");
+
+  Object.assign(errors, validateProposal({ url: website.value, email: email.value }));
+  if (errors.website || errors.email) return focusFirstError();
+
+  const url = normalizeWebsite(website.value);
+  website.value = url;
+  status.value = "loading";
+  try {
+    const result = await submitProposal({
+      url,
+      email: email.value.trim(),
+      message: message.value,
+      packageName: selectedPackage.value,
+      honeypot: honeypot.value,
+    });
+    if (result.mode === "mailto") {
+      window.location.href = result.href;
+      status.value = "mailto";
+    } else {
+      status.value = "sent";
+      website.value = "";
+      email.value = "";
+      message.value = "";
+      selectedPackage.value = "";
+    }
+  } catch {
+    status.value = "error";
+  }
 }
 </script>
 
 <template>
-  <div class="proposal-form" :class="`proposal-form-${location}`">
-    <div
-      v-if="success"
-      class="proposal-success"
-      :role="state.activeForm === location ? 'status' : undefined"
-      :aria-live="state.activeForm === location ? 'polite' : 'off'"
-    >
-      <span class="success-check"
-        ><AppIcon name="check" :size="20" /> Anfrage erhalten</span
+  <form
+    class="proposal-form"
+    :class="`proposal-form-${location}`"
+    novalidate
+    @submit.prevent="submit"
+  >
+    <template v-if="!full">
+      <label class="form-label" :for="id('website')"
+        >Link senden, kostenlose Einschätzung erhalten</label
       >
-      <h3 :id="id('success')" tabindex="-1">
-        Danke – deine Anfrage ist angekommen.
-      </h3>
-      <p>
-        Ich schaue mir deine Website an und melde mich normalerweise innerhalb
-        von 1–2 Werktagen mit einer ersten Einschätzung.
+      <div class="url-input-group">
+        <AppIcon name="link" :size="18" /><input
+          :id="id('website')"
+          v-model="website"
+          name="website"
+          type="text"
+          inputmode="url"
+          autocomplete="url"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="deine-firma.ch"
+          required
+          :aria-invalid="!!errors.website"
+          :aria-describedby="errors.website ? id('website-error') : undefined"
+        /><button class="button" type="submit">
+          Einschätzung erhalten <AppIcon :size="17" />
+        </button>
+      </div>
+      <p
+        v-if="errors.website"
+        :id="id('website-error')"
+        class="form-error"
+        role="alert"
+      >
+        {{ errors.website }}
       </p>
-      <button type="button" class="form-text-button" @click="reset">
-        Neue Anfrage senden <AppIcon :size="15" />
-      </button>
-    </div>
-    <form
-      v-else
-      novalidate
-      :aria-busy="state.submitting && state.activeForm === location"
-      @submit.prevent="submit"
-    >
-      <template v-if="!detailsOpen">
-        <label class="sr-only" :for="id('website')"
-          >Deine aktuelle Website</label
-        >
-        <div class="url-input-group">
-          <AppIcon name="link" :size="18" />
-          <input
-            :id="id('website')"
-            v-model="state.website"
-            name="website"
-            type="text"
-            inputmode="url"
-            autocomplete="url"
-            autocapitalize="none"
-            spellcheck="false"
-            placeholder="https://deine-website.ch"
-            required
-            :disabled="state.submitting"
-            :aria-invalid="!!websiteError"
-            :aria-describedby="websiteError ? id('website-error') : undefined"
-            @input="
-              state.errors = {};
-              state.submitError = '';
-            "
-          />
-          <button class="button" type="submit" :disabled="state.submitting">
-            Angebot anfragen <AppIcon :size="17" />
-          </button>
-        </div>
+    </template>
+
+    <template v-else>
+      <div class="form-field">
+        <label :for="id('website')">Deine aktuelle Website</label>
+        <input
+          :id="id('website')"
+          v-model="website"
+          name="website"
+          type="text"
+          inputmode="url"
+          autocomplete="url"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="deine-firma.ch"
+          required
+          :aria-invalid="!!errors.website"
+          :aria-describedby="errors.website ? id('website-error') : undefined"
+        />
         <p
-          v-if="websiteError"
+          v-if="errors.website"
           :id="id('website-error')"
           class="form-error"
           role="alert"
         >
-          {{ websiteError }}
+          {{ errors.website }}
         </p>
-      </template>
-      <Transition name="proposal-expand">
-        <div v-if="detailsOpen" class="proposal-details">
-          <h3>Fast geschafft.</h3>
-          <div class="submitted-website">
-            <AppIcon name="link" :size="16" /><span>{{ state.website }}</span
-            ><button
-              type="button"
-              class="form-text-button"
-              :disabled="state.submitting"
-              @click="edit"
-            >
-              Ändern
-            </button>
-          </div>
-          <div class="proposal-field">
-            <label :for="id('email')"
-              >E-Mail <span aria-hidden="true">*</span></label
-            >
-            <input
-              :id="id('email')"
-              v-model="state.email"
-              type="email"
-              name="email"
-              inputmode="email"
-              autocomplete="email"
-              autocapitalize="none"
-              spellcheck="false"
-              placeholder="name@firma.ch"
-              required
-              maxlength="254"
-              :disabled="state.submitting"
-              :aria-invalid="!!state.errors.email"
-              :aria-describedby="
-                state.errors.email ? id('email-error') : undefined
-              "
-              @input="
-                delete state.errors.email;
-                state.submitError = '';
-              "
-            />
-            <p
-              v-if="state.errors.email"
-              :id="id('email-error')"
-              class="form-error"
-              role="alert"
-            >
-              {{ state.errors.email }}
-            </p>
-          </div>
-          <div class="proposal-field">
-            <label :for="id('message')"
-              >Was möchtest du verbessern?
-              <span class="optional-label">Optional</span></label
-            >
-            <textarea
-              :id="id('message')"
-              v-model="state.message"
-              name="message"
-              rows="4"
-              :maxlength="MAX_MESSAGE_LENGTH"
-              :disabled="state.submitting"
-              placeholder="Zum Beispiel: Die Website wirkt veraltet, funktioniert auf dem Handy nicht gut oder ich möchte Inhalte einfacher bearbeiten können."
-              :aria-invalid="!!state.errors.message"
-              :aria-describedby="
-                state.errors.message ? id('message-error') : undefined
-              "
-              @input="
-                delete state.errors.message;
-                state.submitError = '';
-              "
-            ></textarea>
-            <p
-              v-if="state.errors.message"
-              :id="id('message-error')"
-              class="form-error"
-              role="alert"
-            >
-              {{ state.errors.message }}
-            </p>
-          </div>
-          <div class="proposal-honeypot" aria-hidden="true">
-            <label :for="id('fax')">Bitte leer lassen</label
-            ><input
-              :id="id('fax')"
-              v-model="state.companyFax"
-              type="text"
-              name="companyFax"
-              tabindex="-1"
-              autocomplete="off"
-            />
-          </div>
-          <div v-if="state.submitError" class="submission-error" role="alert">
-            <p>{{ state.submitError }}</p>
-            <a :href="`mailto:${proposalEmail}`">{{ proposalEmail }}</a>
-          </div>
-          <button
-            class="button proposal-send"
-            type="submit"
-            :disabled="state.submitting"
-          >
-            <span aria-live="polite">{{
-              state.submitting ? "Wird gesendet…" : "Anfrage senden"
-            }}</span
-            ><AppIcon v-if="!state.submitting" :size="17" />
-          </button>
-          <p class="proposal-privacy">
-            Deine Angaben verwende ich, um deine Anfrage zu beantworten.
-            <a href="/datenschutz" target="_blank" rel="noopener"
-              >Datenschutz</a
-            >
-          </p>
-        </div>
-      </Transition>
-      <div v-if="state.packageName" class="selected-package">
-        Gewähltes Paket: {{ state.packageName }}
+      </div>
+      <div class="form-field">
+        <label :for="id('email')">Deine E-Mail-Adresse</label>
+        <input
+          :id="id('email')"
+          v-model="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          autocapitalize="none"
+          spellcheck="false"
+          placeholder="name@deine-firma.ch"
+          required
+          :aria-invalid="!!errors.email"
+          :aria-describedby="errors.email ? id('email-error') : undefined"
+        />
+        <p
+          v-if="errors.email"
+          :id="id('email-error')"
+          class="form-error"
+          role="alert"
+        >
+          {{ errors.email }}
+        </p>
+      </div>
+      <div class="form-field">
+        <label :for="id('message')"
+          >Was stört dich an deiner aktuellen Website?
+          <span class="optional">(optional)</span></label
+        >
+        <textarea
+          :id="id('message')"
+          v-model="message"
+          name="message"
+          rows="3"
+          maxlength="2000"
+        ></textarea>
+      </div>
+      <!-- Spam trap: hidden from people, often filled in by bots. -->
+      <div class="form-trap" aria-hidden="true">
+        <label :for="id('company')">Firma (bitte leer lassen)</label>
+        <input
+          :id="id('company')"
+          v-model="honeypot"
+          name="company"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+      <div v-if="selectedPackage" class="selected-package">
+        Gewähltes Paket: {{ selectedPackage }}
         <button
           type="button"
           aria-label="Paketauswahl entfernen"
-          :disabled="state.submitting"
-          @click="state.packageName = ''"
+          @click="selectedPackage = ''"
         >
           <AppIcon name="close" :size="14" />
         </button>
       </div>
-    </form>
-  </div>
+      <button
+        class="button form-submit"
+        type="submit"
+        :disabled="status === 'loading'"
+        :aria-busy="status === 'loading'"
+      >
+        {{
+          status === "loading"
+            ? "Wird gesendet …"
+            : "Kostenlose Einschätzung anfordern"
+        }}
+        <AppIcon :size="17" />
+      </button>
+      <div class="form-status" role="status" aria-live="polite">
+        <p v-if="status === 'sent'" class="form-success">
+          Danke, ich melde mich {{ offer.responseTime }}.
+        </p>
+        <p v-else-if="status === 'mailto'" class="form-success">
+          Danke! Dein E-Mail-Programm öffnet sich mit der vorbereiteten
+          Anfrage. Sobald du sie abschickst, melde ich mich
+          {{ offer.responseTime }}. Öffnet sich nichts? Schreib direkt an
+          <a :href="`mailto:${proposalEmail}`">{{ proposalEmail }}</a
+          >.
+        </p>
+        <p v-else-if="status === 'error'" class="form-error">
+          Das hat leider nicht geklappt. Bitte versuch es nochmals oder schreib
+          direkt an
+          <a :href="`mailto:${proposalEmail}`">{{ proposalEmail }}</a
+          >.
+        </p>
+      </div>
+    </template>
+  </form>
 </template>

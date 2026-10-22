@@ -1,13 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import { onBeforeUnmount, ref, watch } from "vue";
 import AppIcon from "./AppIcon.vue";
 const menuOpen = ref(false);
-defineProps({ homePage: { type: Boolean, default: true } });
+const toggle = ref(null);
+
+// Escape closes the menu from anywhere and returns focus to the toggle.
+function onKeydown(event) {
+  if (event.key !== "Escape") return;
+  menuOpen.value = false;
+  toggle.value?.focus();
+}
+watch(menuOpen, (open) =>
+  document[open ? "addEventListener" : "removeEventListener"]("keydown", onKeydown),
+);
+onBeforeUnmount(() => document.removeEventListener("keydown", onKeydown));
+// Absolute anchors so the navigation also works from the legal pages.
 const links = [
-  { href: "#home", label: "Start" },
-  { href: "#ablauf", label: "So geht’s" },
-  { href: "#preise", label: "Preise" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#start", label: "Start" },
+  { href: "/#ablauf", label: "So geht’s" },
+  { href: "/#preise", label: "Preise" },
+  { href: "/#betreuung", label: "Betreuung" },
+  { href: "/#ueber-mich", label: "Über mich" },
+  { href: "/#faq", label: "FAQ" },
 ];
 </script>
 
@@ -16,26 +30,23 @@ const links = [
     <div class="container header-inner">
       <a
         class="brand"
-        :href="homePage ? '#home' : '/#home'"
-        aria-label="pasquale.dev – zur Startseite"
+        href="/#start"
+        aria-label="Pasquale Sergi, zur Startseite"
         @click="menuOpen = false"
-        ><span>pasquale<span class="brand-dot">.</span>dev</span
-        ><small>Website-Relaunch für Schweizer KMU.</small></a
+        ><span>Pasquale Sergi<span class="brand-dot">.</span></span
+        ><small>Websites für Schweizer Kleinunternehmen.</small></a
       >
       <nav class="desktop-nav" aria-label="Hauptnavigation">
-        <a
-          v-for="link in links"
-          :key="link.href"
-          :href="`${homePage ? '' : '/'}${link.href}`"
-          >{{ link.label }}</a
-        >
+        <a v-for="link in links" :key="link.href" :href="link.href">{{
+          link.label
+        }}</a>
       </nav>
-      <a
-        class="button button-small header-cta"
-        :href="homePage ? '#proposal' : '/#proposal'"
-        >Angebot anfragen <AppIcon :size="16"
+      <a class="button button-small header-cta" href="/#anfrage"
+        ><span class="cta-long">Angebot anfragen</span
+        ><span class="cta-short">Anfragen</span> <AppIcon :size="16"
       /></a>
       <button
+        ref="toggle"
         class="menu-toggle"
         type="button"
         :aria-expanded="menuOpen"
@@ -51,17 +62,14 @@ const links = [
       id="mobile-nav"
       class="mobile-nav"
       aria-label="Mobile Navigation"
-      @keydown.esc="menuOpen = false"
     >
       <a
         v-for="link in links"
         :key="link.href"
-        :href="`${homePage ? '' : '/'}${link.href}`"
+        :href="link.href"
         @click="menuOpen = false"
         >{{ link.label }}</a
-      ><a
-        :href="homePage ? '#proposal' : '/#proposal'"
-        @click="menuOpen = false"
+      ><a href="/#anfrage" @click="menuOpen = false"
         >Angebot anfragen <AppIcon :size="16"
       /></a>
     </nav>

@@ -1,44 +1,28 @@
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { contactApiPlugin } from "./server/vite-contact.js";
-import { fileURLToPath } from "node:url";
+import { pages, pageForPath } from "./src/pages.js";
+import { renderHead } from "./src/head.js";
+import { show } from "./src/site.config.js";
 
-// Match static directory-index URLs locally without a Vercel rewrite.
-function legalPageUrls() {
-  const install = (server) => {
-    server.middlewares.use((request, _response, next) => {
-      const pathname = request.url?.split("?")[0];
-      if (["/impressum", "/datenschutz"].includes(pathname)) {
-        request.url = request.url.replace(pathname, `${pathname}/`);
-      }
-      next();
-    });
-  };
-  return {
-    name: "local-legal-page-urls",
-    configureServer: install,
-    configurePreviewServer: install,
-  };
-}
-
-export default defineConfig(({ mode }) => ({
-  appType: "mpa",
-  plugins: [
-    vue(),
-    legalPageUrls(),
-    contactApiPlugin({ ...loadEnv(mode, process.cwd(), ""), ...process.env }),
-  ],
-  build: {
-    rollupOptions: {
-      input: {
-        home: fileURLToPath(new URL("./index.html", import.meta.url)),
-        impressum: fileURLToPath(
-          new URL("./impressum/index.html", import.meta.url),
-        ),
-        datenschutz: fileURLToPath(
-          new URL("./datenschutz/index.html", import.meta.url),
-        ),
-      },
-    },
+// In development the head tags are injected per request. Production pages
+// get theirs from scripts/prerender.js.
+const devHead = {
+  name: "dev-head",
+  apply: "serve",
+  transformIndexHtml(html, { path }) {
+    const page = pages.find((p) => p.name === pageForPath(path));
+    return html.replace("<!--app-head-->", renderHead(page));
   },
-}));
+};
+
+export default defineConfig({
+  plugins: [vue(), devHead],
+  // DEBUG_HYDRATION=1 npm run build logs hydration mismatches in production.
+  define: {
+    // Build-time switch: while false, no case-study code or client name ships.
+    __CASE_STUDY__: JSON.stringify(show.caseStudy),
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(
+      !!process.env.DEBUG_HYDRATION,
+    ),
+  },
+});
